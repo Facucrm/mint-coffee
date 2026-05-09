@@ -58,6 +58,26 @@ const MINT_PRODUCTS = {
             { name: 'Pablo S.', rating: 5, text: 'La energía que da el matcha es distinta, mucho más enfocada. Me viene genial para concentrarme sin ponerme nervioso.' },
             { name: 'Ana Isabel', rating: 5, text: 'Simplemente delicioso. La mezcla con la avena es súper cremosa. Un 10 absoluto.' }
         ]
+    },
+    'mint-6pack': {
+        id: 'mint-6pack',
+        name: 'The 6-Pack Collection',
+        tagline: 'The Complete Experience',
+        price: 14.99,
+        image: './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png',
+        description: 'El surtido definitivo para mantener tu semana al máximo nivel. Este pack ahorro incluye 2 latas de MINT Cold Brew Original, 2 latas de Caramel Cold Brew y 2 latas de MINT Matcha Latte. Disfruta de la variedad perfecta para alternar entre energía pura, indulgencia dulce y enfoque prolongado. Ahorras más de 5€ respecto a la compra individual.',
+        tastingNotes: ['Variedad Completa', 'Ahorro Extra', 'Energía 24/7'],
+        nutrition: {
+            calories: 'Variable',
+            sugar: 'Variable',
+            caffeine: 'Alta',
+            ingredients: 'Contiene 2x Cold Brew, 2x Caramel Cold Brew, 2x Matcha Latte.'
+        },
+        reviews: [
+            { name: 'Alejandro G.', rating: 5, text: 'El mejor pack de supervivencia para exámenes. Salen super rentables y tienes para toda la semana.' },
+            { name: 'Sara L.', rating: 5, text: 'Genial para probar todos los sabores o si en el piso de estudiantes a cada uno le gusta uno diferente.' },
+            { name: 'Miguel R.', rating: 5, text: 'El precio es inmejorable. Ojalá saquen un pack de 12 pronto.' }
+        ]
     }
 };
 

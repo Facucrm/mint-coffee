@@ -215,6 +215,41 @@
                     </div>
                 </div>
 
+                <!-- Product 4: The 6-Pack Bundle -->
+                <div class="product-card group relative bg-stone-50 border border-stone-200 flex flex-col md:flex-row col-span-1 md:col-span-2 lg:col-span-3 transition-shadow duration-500 hover:shadow-2xl hover:border-transparent overflow-hidden mt-8">
+                    <div class="absolute top-4 right-4 bg-stone-900 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest z-10">
+                        Best Value
+                    </div>
+                    
+                    <!-- CSS Overlapping Image Container -->
+                    <div class="relative w-full md:w-1/2 aspect-[4/5] md:aspect-auto bg-stone-100/50 flex items-center justify-center p-8 overflow-hidden cursor-pointer" onclick="window.location.href='producto.html?id=mint-6pack'">
+                        <div class="relative w-full h-full flex items-center justify-center scale-90 md:scale-100 group-hover:scale-105 transition-transform duration-700">
+                            <img src="./img/Gemini_Generated_Image_kc4kbpkc4kbpkc4k.png" alt="Caramel" class="absolute w-[35%] md:w-[40%] object-contain blend-multiply filter drop-shadow-xl -translate-x-[40%] rotate-[-10deg] z-10">
+                            <img src="./img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png" alt="Matcha" class="absolute w-[35%] md:w-[40%] object-contain blend-multiply filter drop-shadow-xl translate-x-[40%] rotate-[10deg] z-10">
+                            <img src="./img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png" alt="Black" class="absolute w-[40%] md:w-[45%] object-contain blend-multiply filter drop-shadow-2xl z-20">
+                        </div>
+                    </div>
+                    
+                    <div class="p-8 md:p-16 text-left bg-stone-50 flex-1 flex flex-col justify-center border-t md:border-t-0 md:border-l border-stone-200">
+                        <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2 cursor-pointer" onclick="window.location.href='producto.html?id=mint-6pack'">The Complete Experience</span>
+                        <h3 class="text-4xl md:text-5xl font-bold tracking-tight mb-4 cursor-pointer hover:text-stone-600 transition-colors" onclick="window.location.href='producto.html?id=mint-6pack'">The 6-Pack Collection</h3>
+                        <p class="text-stone-500 text-lg mb-8 leading-relaxed max-w-lg">
+                            Descubre el surtido definitivo para la vida en el campus. Este pack incluye <strong>2 MINT Cold Brew</strong>, <strong>2 Caramel Cold Brew</strong> y <strong>2 MINT Matcha Latte</strong>. La rotación perfecta de energía, enfoque y dulzura para tu semana, con un ahorro excepcional.
+                        </p>
+                        
+                        <div class="mt-auto pt-6 border-t border-stone-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                            <div class="flex flex-col">
+                                <span class="text-3xl font-extrabold tracking-tight">14,99€</span>
+                                <span class="text-sm text-stone-400 line-through">Valorado en 20,40€</span>
+                            </div>
+                            <button onclick="addToCart('mint-6pack', 'The 6-Pack Collection', 14.99, './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png')" class="w-full sm:w-auto bg-stone-900 text-white px-10 py-5 font-semibold tracking-wide hover:bg-black transition-colors shadow-xl text-lg flex items-center justify-center gap-2">
+                                Añadir Pack
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </main>
