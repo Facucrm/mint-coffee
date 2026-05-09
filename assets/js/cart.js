@@ -147,24 +147,33 @@ function renderCart() {
         if (cartSubtotal) {
             cartSubtotal.innerText = `${subtotal.toFixed(2).replace('.', ',')}€`;
         }
+
+        // Add shipping indicator to drawer
+        let shippingInfo = '';
+        if (subtotal < 30) {
+            const remaining = 30 - subtotal;
+            shippingInfo = `
+                <div class="mt-6 p-4 bg-stone-100 rounded-xl text-xs text-stone-600 flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                    <span>Faltan <strong>${remaining.toFixed(2).replace('.', ',')}€</strong> para <strong>Envío Gratis</strong>.</span>
+                </div>
+            `;
+        } else {
+            shippingInfo = `
+                <div class="mt-6 p-4 bg-green-50 text-green-700 rounded-xl text-xs flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M20 6 9 17l-5-5"/></svg>
+                    <span>¡Enhorabuena! Tienes <strong>Envío Gratis</strong>.</span>
+                </div>
+            `;
+        }
+        cartItemsContainer.insertAdjacentHTML('beforeend', shippingInfo);
     }
 }
 
 // Checkout Function
 function handleCheckout() {
     if (cart.length === 0) return;
-    
-    let text = "Hola, me gustaría realizar el siguiente pedido MINT:\n\n";
-    let subtotal = 0;
-    cart.forEach(item => {
-        text += `- ${item.quantity}x ${item.name} (${(item.price * item.quantity).toFixed(2)}€)\n`;
-        subtotal += (item.price * item.quantity);
-    });
-    text += `\nTotal: ${subtotal.toFixed(2)}€\n`;
-    text += "\nPor favor, confirmad disponibilidad para pasar a recoger.";
-    
-    const whatsappUrl = `https://wa.me/34600000000?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank');
+    window.location.href = 'checkout.html';
 }
 
 // Global Cart UI Setup
