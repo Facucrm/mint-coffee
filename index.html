@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINT Speciality | Premium RTD Coffee</title>
+    <meta name="description" content="MINT Speciality - CERO ESPERAS. 100% ENFOQUE. Premium Ready-To-Drink coffee and matcha.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { stone: { 50: '#f5f5f4', 900: '#1c1917' } }
+                }
+            }
+        }
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body { background-color: #f5f5f4; color: #1c1917; overflow-x: hidden; }
+        .blend-multiply { mix-blend-mode: multiply; }
+        
+        .cart-drawer { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .cart-drawer.open { transform: translateX(0); }
+        .overlay { opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+        .overlay.open { opacity: 0.5; pointer-events: auto; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f5f5f4; }
+        ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+    </style>
+</head>
+<body class="antialiased selection:bg-stone-900 selection:text-white">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-stone-50/80 backdrop-blur-md border-b border-stone-200/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            
+            <!-- Left: Nav (Desktop) / Hamburger (Mobile) -->
+            <div class="flex-1 md:flex-none">
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <a href="index.html" class="text-stone-900 font-bold border-b-2 border-stone-900 pb-1">Inicio</a>
+                    <a href="productos.html" class="hover:text-stone-500 transition-colors">Productos</a>
+                    <a href="nosotros.html" class="hover:text-stone-500 transition-colors">Nosotros</a>
+                </nav>
+                <button id="mobileMenuBtn" class="md:hidden p-2 -ml-2 text-stone-900 relative z-50 hover:opacity-70 transition-opacity">
+                    <svg id="menuIconOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                    <svg id="menuIconClose" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+                        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Center: Logo -->
+            <a href="index.html" class="flex items-center gap-2 absolute left-1/2 -translate-x-1/2 z-50">
+                <img src="./assets/mint_logo.png" alt="MINT Logo" class="h-10 w-10 object-contain blend-multiply">
+            </a>
+            
+            <!-- Right: Cart -->
+            <div class="flex-1 md:flex-none flex items-center justify-end">
+                <button id="cartBtn" class="relative z-50 flex items-center gap-2 font-medium text-sm hover:opacity-70 transition-opacity">
+                    <span class="hidden sm:inline">Carrito</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                    </svg>
+                    <!-- Badge -->
+                    <span id="cartBadge" class="absolute -top-2 -right-2 bg-stone-900 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center" style="display: none;">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 bg-stone-50 z-40 transform -translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center justify-center space-y-8 md:hidden">
+        <a href="index.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Inicio</a>
+        <a href="productos.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Productos</a>
+        <a href="nosotros.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Nosotros</a>
+    </div>
+
+    <!-- Cart Overlay & Drawer -->
+    <div id="overlay" class="overlay fixed inset-0 bg-stone-900 z-50"></div>
+    <div id="cartDrawer" class="cart-drawer fixed top-0 right-0 w-full sm:max-w-md h-full bg-stone-50 shadow-2xl z-50 flex flex-col border-l border-stone-200">
+        <div class="p-6 border-b border-stone-200 flex items-center justify-between">
+            <h2 class="font-bold text-xl">Tu Cesta</h2>
+            <button id="closeCartBtn" class="p-2 hover:bg-stone-200 rounded-full transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Empty State -->
+        <div id="cartEmptyState" class="flex-1 p-6 flex flex-col items-center justify-center text-stone-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-4 opacity-50">
+                <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+            </svg>
+            <p>Tu cesta está vacía</p>
+        </div>
+
+        <!-- Cart Items -->
+        <div id="cartItems" class="flex-1 p-6 overflow-y-auto" style="display: none;"></div>
+
+        <!-- Cart Footer -->
+        <div id="cartFooter" class="p-6 border-t border-stone-200 bg-stone-50" style="display: none;">
+            <div class="flex items-center justify-between font-bold text-lg mb-6">
+                <span>Subtotal</span>
+                <span id="cartSubtotal">0,00€</span>
+            </div>
+            <button id="checkoutBtn" class="w-full bg-stone-900 text-white py-4 font-semibold tracking-wide hover:bg-black transition-colors rounded-none flex items-center justify-center gap-2">
+                CHECKOUT 
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <main>
+        <!-- Dynamic Scroll Hero -->
+        <section id="hero-scroll-container" class="relative w-full h-[400vh]">
+            <div class="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center pt-20">
+                
+                <!-- Background Big Text -->
+                <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none select-none">
+                    <h1 class="text-[20vw] font-black leading-none whitespace-nowrap">MINT</h1>
+                </div>
+
+                <!-- Dynamic Typography Container -->
+                <div class="relative z-20 text-center px-6 flex flex-col items-center justify-center h-32 md:h-48 mb-8 md:mb-12 mt-4 md:mt-8">
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter leading-[0.9] text-stone-900 absolute w-full flex items-center justify-center">
+                        <span id="hero-hl-1" class="absolute">CERO ESPERAS.</span>
+                        <span id="hero-hl-2" class="absolute opacity-0 translate-y-10">100% ENFOQUE.</span>
+                        <span id="hero-hl-3" class="absolute opacity-0 translate-y-10 whitespace-nowrap">MINT Speciality.<br><span class="text-3xl md:text-5xl">Your Campus Fuel.</span></span>
+                    </h1>
+                </div>
+
+                <!-- Cans Container -->
+                <div class="relative w-full max-w-[800px] h-[40vh] md:h-[50vh] flex items-center justify-center z-10 perspective-1000 mt-4 md:mt-8">
+                    <!-- Can 1: Black -->
+                    <img id="can-black" src="./img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png" alt="MINT Cold Brew" class="absolute w-[160px] md:w-[240px] object-contain blend-multiply filter drop-shadow-2xl origin-center z-30">
+                    
+                    <!-- Can 2: Caramel -->
+                    <img id="can-caramel" src="./img/Gemini_Generated_Image_kc4kbpkc4kbpkc4k.png" alt="MINT Caramel" class="absolute w-[160px] md:w-[240px] object-contain blend-multiply filter drop-shadow-2xl origin-center z-20 opacity-0 translate-x-[200px] rotate-12">
+                    
+                    <!-- Can 3: Matcha -->
+                    <img id="can-matcha" src="./img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png" alt="MINT Matcha" class="absolute w-[160px] md:w-[240px] object-contain blend-multiply filter drop-shadow-2xl origin-center z-10 opacity-0 translate-x-[200px] rotate-12">
+                </div>
+
+                <!-- Final State Content -->
+                <div id="hero-final-content" class="relative z-30 text-center px-6 mt-8 opacity-0 translate-y-10 flex flex-col items-center pointer-events-none">
+                    <p class="text-lg md:text-xl text-stone-500 max-w-xl mx-auto font-medium mb-6 md:mb-8">
+                        Café de Especialidad y Matcha RTD. Diseñado para la vida universitaria on-the-go.
+                    </p>
+                    <button onclick="addBundleToCart()" class="pointer-events-auto group relative bg-stone-900 text-white px-8 py-4 font-semibold tracking-wide hover:bg-black transition-colors shadow-2xl overflow-hidden rounded-full cursor-pointer">
+                        <span class="relative z-10 flex items-center gap-2 group-hover:-translate-y-10 transition-transform duration-300">
+                            Añadir al Lote 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </span>
+                        <span class="absolute inset-0 z-10 flex items-center justify-center translate-y-10 group-hover:translate-y-0 transition-transform duration-300 font-bold">
+                            10,20€ Total
+                        </span>
+                    </button>
+                </div>
+                
+                <!-- Scroll indicator -->
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-stone-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Showcase (Home preview) -->
+        <section class="py-32 px-6 bg-stone-100/50">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-20 section-reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Nuestra Especialidad</h2>
+                    <p class="text-stone-500 font-medium text-lg">Ingredientes premium. Listos para impulsar tu día.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                    <div class="product-card group relative bg-stone-50 border border-stone-200 p-8 md:p-12 flex flex-col items-center text-center transition-transform duration-500 hover:-translate-y-2">
+                        <div class="w-full aspect-square relative mb-8 flex items-center justify-center cursor-pointer" onclick="window.location.href='producto.html?id=mint-black'">
+                            <img src="./img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png" alt="Premium Cold Brew" class="w-[60%] object-contain blend-multiply transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3">
+                        </div>
+                        <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2 text-center cursor-pointer" onclick="window.location.href='producto.html?id=mint-black'">Coffee Specialists</span>
+                        <h3 class="text-3xl font-bold tracking-tight mb-2 text-center cursor-pointer hover:text-stone-600 transition-colors" onclick="window.location.href='producto.html?id=mint-black'">Premium Cold Brew</h3>
+                        <p class="text-stone-500 mb-6 text-sm text-center">330ml | 11.2 FL OZ</p>
+                        <div class="mt-auto w-full flex items-center justify-between pt-6 border-t border-stone-200">
+                            <span class="text-2xl font-semibold">3,40€</span>
+                            <button onclick="addToCart('mint-black', 'Premium Cold Brew', 3.40, './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png')" class="bg-stone-900 text-white px-6 py-3 font-medium hover:bg-stone-800 transition-colors">
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="product-card group relative bg-stone-50 border border-stone-200 p-8 md:p-12 flex flex-col items-center text-center transition-transform duration-500 hover:-translate-y-2">
+                        <div class="w-full aspect-square relative mb-8 flex items-center justify-center cursor-pointer" onclick="window.location.href='producto.html?id=mint-matcha'">
+                            <img src="./img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png" alt="Matcha Latte" class="w-[60%] object-contain blend-multiply transition-transform duration-700 group-hover:scale-110 group-hover:-rotate-3">
+                        </div>
+                        <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2 text-center cursor-pointer" onclick="window.location.href='producto.html?id=mint-matcha'">Matcha Specialists</span>
+                        <h3 class="text-3xl font-bold tracking-tight mb-2 text-center cursor-pointer hover:text-stone-600 transition-colors" onclick="window.location.href='producto.html?id=mint-matcha'">Matcha Latte</h3>
+                        <p class="text-stone-500 mb-6 text-sm text-center">330ml | 11.2 FL OZ</p>
+                        <div class="mt-auto w-full flex items-center justify-between pt-6 border-t border-stone-200">
+                            <span class="text-2xl font-semibold">3,40€</span>
+                            <button onclick="addToCart('mint-matcha', 'Matcha Latte', 3.40, './img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png')" class="bg-stone-900 text-white px-6 py-3 font-medium hover:bg-stone-800 transition-colors">
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-16 text-center">
+                    <a href="productos.html" class="inline-flex items-center gap-2 border-b-2 border-stone-900 font-bold pb-1 hover:text-stone-500 hover:border-stone-500 transition-colors">
+                        VER TODOS LOS PRODUCTOS
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Value Props -->
+        <section class="py-32 px-6 bg-stone-900 text-stone-50">
+            <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-16 text-center">
+                <div class="value-prop flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-stone-800 flex items-center justify-center mb-6 text-stone-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold tracking-tight mb-3">Especialidad Local</h3>
+                    <p class="text-stone-400 leading-relaxed">Granos seleccionados y tostados localmente.</p>
+                </div>
+                
+                <div class="value-prop flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-stone-800 flex items-center justify-center mb-6 text-stone-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold tracking-tight mb-3">Listo para tomar</h3>
+                    <p class="text-stone-400 leading-relaxed">Formato perfecto para llevar tu energía.</p>
+                </div>
+                
+                <div class="value-prop flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-stone-800 flex items-center justify-center mb-6 text-stone-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold tracking-tight mb-3">PET Sostenible</h3>
+                    <p class="text-stone-400 leading-relaxed">Envases 100% reciclables. Comprometidos.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-stone-400 py-16 px-6 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
+            <div class="flex flex-col items-center md:items-start">
+                <img src="./assets/mint_logo.png" alt="MINT Logo" class="h-16 w-16 object-contain mb-6 filter invert opacity-90">
+                <p class="max-w-xs text-center md:text-left text-sm leading-relaxed mb-6">
+                    Redefiniendo el RTD con foco absoluto en la calidad. Cero esperas. 100% Enfoque.
+                </p>
+            </div>
+            
+            <div class="text-center md:text-right">
+                <h4 class="text-white font-bold tracking-widest uppercase mb-4 text-sm">Navegación</h4>
+                <div class="flex flex-col gap-2 font-medium">
+                    <a href="index.html" class="hover:text-white transition-colors">Inicio</a>
+                    <a href="productos.html" class="hover:text-white transition-colors">Productos</a>
+                    <a href="nosotros.html" class="hover:text-white transition-colors">Nosotros</a>
+                </div>
+                <p class="text-sm mt-6">Campus UMA Teatinos<br>Málaga, España</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include global cart logic -->
+    <script src="./assets/js/cart.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Bundle cart helper
+        function addBundleToCart() {
+            addToCart('mint-black', 'MINT Cold Brew', 3.40, './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png');
+            addToCart('mint-caramel', 'Caramel Cold Brew', 3.40, './img/Gemini_Generated_Image_kc4kbpkc4kbpkc4k.png');
+            addToCart('mint-matcha', 'MINT Matcha Latte', 3.40, './img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png');
+        }
+
+        let mm = gsap.matchMedia();
+
+        mm.add("(min-width: 768px)", () => {
+            // Desktop Animation Timeline
+            const masterTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#hero-scroll-container",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1,
+                }
+            });
+
+            // Phase 1: 0-33% - Black leaves, Caramel enters
+            masterTl.to("#hero-hl-1", { opacity: 0, y: -20, duration: 1 }, 0)
+                    .to("#can-black", { x: "-20vw", scale: 0.8, rotation: -15, opacity: 0, duration: 1 }, 0)
+                    .to("#can-caramel", { x: 0, opacity: 1, rotation: 0, duration: 1 }, 0)
+                    .to("#hero-hl-2", { opacity: 1, y: 0, duration: 1 }, 0);
+                    
+            // Phase 2: 33-66% - Caramel leaves, Matcha enters
+            masterTl.to("#hero-hl-2", { opacity: 0, y: -20, duration: 1 }, 1)
+                    .to("#can-caramel", { x: "-20vw", scale: 0.8, rotation: -15, opacity: 0, duration: 1 }, 1)
+                    .to("#can-matcha", { x: 0, opacity: 1, rotation: 0, duration: 1 }, 1)
+                    .to("#hero-hl-3", { opacity: 1, y: 0, duration: 1 }, 1);
+
+            // Phase 3: 66-100% - Formation
+            masterTl.to("#can-matcha", { x: "12vw", scale: 0.9, rotation: 15, zIndex: 10, duration: 1 }, 2)
+                    .to("#can-caramel", { x: 0, scale: 1, rotation: 0, opacity: 1, zIndex: 30, duration: 1 }, 2)
+                    .to("#can-black", { x: "-12vw", scale: 0.9, rotation: -15, opacity: 1, zIndex: 20, duration: 1 }, 2)
+                    .to("#hero-final-content", { opacity: 1, y: 0, pointerEvents: 'auto', duration: 0.5 }, 2.5);
+        });
+
+        mm.add("(max-width: 767px)", () => {
+            // Mobile Animation Timeline
+            const masterTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#hero-scroll-container",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1,
+                }
+            });
+
+            masterTl.to("#hero-hl-1", { opacity: 0, y: -20, duration: 1 }, 0)
+                    .to("#can-black", { x: "-50vw", scale: 0.8, opacity: 0, duration: 1 }, 0)
+                    .to("#can-caramel", { x: 0, opacity: 1, rotation: 0, duration: 1 }, 0)
+                    .to("#hero-hl-2", { opacity: 1, y: 0, duration: 1 }, 0);
+                    
+            masterTl.to("#hero-hl-2", { opacity: 0, y: -20, duration: 1 }, 1)
+                    .to("#can-caramel", { x: "-50vw", opacity: 0, duration: 1 }, 1)
+                    .to("#can-matcha", { x: 0, opacity: 1, rotation: 0, duration: 1 }, 1)
+                    .to("#hero-hl-3", { opacity: 1, y: 0, duration: 1 }, 1);
+
+            // Mobile Vertical Formation
+            masterTl.to("#can-matcha", { x: "8vw", y: 30, scale: 0.85, rotation: 10, duration: 1 }, 2)
+                    .to("#can-caramel", { x: 0, y: 0, scale: 1, rotation: 0, opacity: 1, zIndex: 30, duration: 1 }, 2)
+                    .to("#can-black", { x: "-8vw", y: -30, scale: 0.85, rotation: -10, opacity: 1, duration: 1 }, 2)
+                    .to("#hero-final-content", { opacity: 1, y: 0, pointerEvents: 'auto', duration: 0.5 }, 2.5);
+        });
+
+        gsap.utils.toArray(".product-card").forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: { trigger: card, start: "top 85%" },
+                y: 50, opacity: 0, duration: 0.8, ease: "power3.out", delay: i * 0.2
+            });
+        });
+
+        gsap.from(".value-prop", {
+            scrollTrigger: { trigger: ".value-prop", start: "top 85%" },
+            y: 30, opacity: 0, duration: 0.6, stagger: 0.2, ease: "power2.out"
+        });
+    </script>
+</body>
+</html>
