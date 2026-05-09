@@ -3,9 +3,45 @@ const CART_STORAGE_KEY = 'mint_speciality_cart';
 // Init Cart State
 let cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
 
-// Save to LocalStorage
-function saveCart() {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+// Sync Cart with Auth
+window.syncCartWithAuth = async (user) => {
+    if (user) {
+        // Load cart from firestore
+        try {
+            const docRef = db.collection('carts').doc(user.uid);
+            const docSnap = await docRef.get();
+            if (docSnap.exists) {
+                cart = docSnap.data().items || [];
+            } else {
+                // If local cart exists, upload it, then clear it from local
+                if (cart.length > 0) {
+                    await docRef.set({ items: cart });
+                }
+            }
+            renderCart();
+            // Clear local storage cart
+            localStorage.removeItem(CART_STORAGE_KEY);
+        } catch (error) {
+            console.error("Error fetching cart from Firestore:", error);
+        }
+    } else {
+        // Load cart from local storage
+        cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+        renderCart();
+    }
+};
+
+// Save to LocalStorage or Firestore
+async function saveCart() {
+    if (typeof currentUser !== 'undefined' && currentUser) {
+        try {
+            await db.collection('carts').doc(currentUser.uid).set({ items: cart });
+        } catch (error) {
+            console.error("Error saving cart to Firestore:", error);
+        }
+    } else {
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    }
 }
 
 // Add Item
