@@ -174,10 +174,13 @@ function renderCart() {
 }
 
 // Checkout Function
-function handleCheckout() {
-    if (cart.length === 0) return;
+window.handleCheckout = function() {
+    if (cart.length === 0) {
+        alert('Tu cesta está vacía.');
+        return;
+    }
     window.location.href = 'checkout.html';
-}
+};
 
 // Global Cart UI Setup
 document.addEventListener('DOMContentLoaded', () => {
