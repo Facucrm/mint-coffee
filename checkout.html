@@ -212,6 +212,8 @@
     <script src="./assets/js/cart.js"></script>
 
     <script>
+        let isSyncing = true;
+        
         // Override initial render for checkout page
         function renderCheckout() {
             const container = document.getElementById('checkoutItems');
@@ -219,8 +221,13 @@
             const shippingLabel = document.getElementById('checkoutShipping');
             const totalLabel = document.getElementById('checkoutTotal');
 
+            if (!container) return;
+
+            // Give Firebase/LocalStorage 1.5 seconds to sync before redirecting
             if (cart.length === 0) {
-                window.location.href = 'productos.html';
+                if (!isSyncing) {
+                    window.location.href = 'productos.html';
+                }
                 return;
             }
 
@@ -229,7 +236,7 @@
             cart.forEach(item => {
                 subtotal += (item.price * item.quantity);
                 html += `
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-4 animate-in fade-in duration-500">
                         <div class="relative">
                             <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain mix-blend-multiply bg-stone-100 rounded-lg">
                             <span class="absolute -top-2 -right-2 bg-stone-900 text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center font-bold">${item.quantity}</span>
@@ -245,11 +252,22 @@
             
             const shipping = subtotal >= 30 ? 0 : 2.99;
             shippingLabel.innerText = shipping === 0 ? 'GRATIS' : `${shipping.toFixed(2).replace('.', ',')}€`;
-            shippingLabel.className = shipping === 0 ? 'text-green-600 font-bold' : 'text-stone-500';
+            shippingLabel.className = shipping === 0 ? 'text-green-600 font-bold font-extrabold' : 'text-stone-500';
 
             const total = subtotal + shipping;
             totalLabel.innerText = `${total.toFixed(2).replace('.', ',')}€`;
         }
+
+        // Listen for cart updates from cart.js
+        document.addEventListener('cartUpdated', () => {
+            renderCheckout();
+        });
+
+        // Grace period for initial sync
+        setTimeout(() => {
+            isSyncing = false;
+            renderCheckout();
+        }, 1500);
 
         // Auto-fill if user is logged in
         auth.onAuthStateChanged(user => {
@@ -274,12 +292,17 @@
                 return;
             }
 
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío.');
+                return;
+            }
+
             // Simulate Stripe Loading
             btn.disabled = true;
             btnText.innerHTML = '<div class="loading-spinner"></div> Procesando...';
             
             setTimeout(async () => {
-                // Clear cart
+                // Clear cart locally
                 cart = [];
                 localStorage.removeItem('mint_speciality_cart');
                 
@@ -295,7 +318,8 @@
             }, 2500);
         }
 
-        window.onload = renderCheckout;
+        // Initial call
+        renderCheckout();
     </script>
 </body>
 </html>

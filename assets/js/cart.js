@@ -167,6 +167,9 @@ function renderCart() {
             `;
         }
         cartItemsContainer.insertAdjacentHTML('beforeend', shippingInfo);
+        
+        // Notify other components (like checkout page)
+        document.dispatchEvent(new CustomEvent('cartUpdated', { detail: { cart, subtotal } }));
     }
 }
 
