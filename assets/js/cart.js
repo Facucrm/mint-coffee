@@ -1,7 +1,8 @@
 const CART_STORAGE_KEY = 'mint_speciality_cart';
 
 // Init Cart State
-let cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+window.cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+let cart = window.cart;
 
 // Sync Cart with Auth
 window.syncCartWithAuth = async (user) => {

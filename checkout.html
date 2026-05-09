@@ -212,8 +212,6 @@
     <script src="./assets/js/cart.js"></script>
 
     <script>
-        let isSyncing = true;
-        
         // Override initial render for checkout page
         function renderCheckout() {
             const container = document.getElementById('checkoutItems');
@@ -223,7 +221,10 @@
 
             if (!container) return;
 
-            if (!cart || cart.length === 0) {
+            // Access global cart from cart.js
+            const currentCart = window.cart || cart || [];
+
+            if (!currentCart || currentCart.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-8">
                         <p class="text-stone-400 italic mb-4">Tu cesta está vacía.</p>
@@ -238,7 +239,7 @@
 
             let html = '';
             let subtotal = 0;
-            cart.forEach(item => {
+            currentCart.forEach(item => {
                 subtotal += (item.price * item.quantity);
                 html += `
                     <div class="flex items-center gap-4 animate-in fade-in duration-500">
@@ -268,6 +269,10 @@
             renderCheckout();
         });
 
+        // Recurring check for the first 3 seconds (to catch any late syncs)
+        const syncInterval = setInterval(renderCheckout, 500);
+        setTimeout(() => clearInterval(syncInterval), 4000);
+
         // Auto-fill if user is logged in
         auth.onAuthStateChanged(user => {
             if (user) {
@@ -291,7 +296,8 @@
                 return;
             }
 
-            if (cart.length === 0) {
+            const currentCart = window.cart || cart || [];
+            if (currentCart.length === 0) {
                 alert('Tu carrito está vacío.');
                 return;
             }
@@ -302,6 +308,7 @@
             
             setTimeout(async () => {
                 // Clear cart locally
+                if (window.cart) window.cart = [];
                 cart = [];
                 localStorage.removeItem('mint_speciality_cart');
                 
