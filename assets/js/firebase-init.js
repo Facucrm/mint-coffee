@@ -1,7 +1,7 @@
 // Firebase Configuration and Initialization (Compat version for Vanilla JS)
 const firebaseConfig = {
   apiKey: "AIzaSyCwAOOdocVeUoa7BYeCbpIMxqI_SZ7AL00",
-  authDomain: "mint-coffee-77bb6.firebaseapp.com",
+  authDomain: "mint-coffee-77bb6.web.app",
   projectId: "mint-coffee-77bb6",
   storageBucket: "mint-coffee-77bb6.firebasestorage.app",
   messagingSenderId: "142384020485",
