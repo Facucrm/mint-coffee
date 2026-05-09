@@ -223,11 +223,16 @@
 
             if (!container) return;
 
-            // Give Firebase/LocalStorage 1.5 seconds to sync before redirecting
-            if (cart.length === 0) {
-                if (!isSyncing) {
-                    window.location.href = 'productos.html';
-                }
+            if (!cart || cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <p class="text-stone-400 italic mb-4">Tu cesta está vacía.</p>
+                        <a href="productos.html" class="text-stone-900 font-bold border-b-2 border-stone-900 pb-1">Ir a la tienda</a>
+                    </div>
+                `;
+                subtotalLabel.innerText = '0,00€';
+                shippingLabel.innerText = '0,00€';
+                totalLabel.innerText = '0,00€';
                 return;
             }
 
@@ -262,12 +267,6 @@
         document.addEventListener('cartUpdated', () => {
             renderCheckout();
         });
-
-        // Grace period for initial sync
-        setTimeout(() => {
-            isSyncing = false;
-            renderCheckout();
-        }, 1500);
 
         // Auto-fill if user is logged in
         auth.onAuthStateChanged(user => {

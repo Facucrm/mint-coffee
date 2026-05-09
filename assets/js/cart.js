@@ -107,6 +107,9 @@ function renderCart() {
         cartEmptyState.style.display = 'flex';
         cartItemsContainer.style.display = 'none';
         cartFooter.style.display = 'none';
+        
+        // Notify other components even if empty
+        document.dispatchEvent(new CustomEvent('cartUpdated', { detail: { cart: [], subtotal: 0 } }));
     } else {
         cartEmptyState.style.display = 'none';
         cartItemsContainer.style.display = 'block';
