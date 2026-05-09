@@ -77,6 +77,19 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => alert('Error: ' + error.message));
     });
 
+    // Google Auth Logic
+    const googleLoginBtns = document.querySelectorAll('.google-auth-btn');
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    
+    googleLoginBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            auth.signInWithPopup(googleProvider)
+                .then(() => closeAuthModal())
+                .catch(error => alert('Error: ' + error.message));
+        });
+    });
+
     window.logoutUser = () => {
         auth.signOut().then(() => {
             // Cart will be cleared and reset to anonymous local storage automatically by auth listener
