@@ -68,10 +68,13 @@
             </a>
             
             <!-- Right: Auth & Cart -->
-            <div class="flex-1 md:flex-none flex items-center justify-end gap-6">
-                <div id="desktopAuthBtn" class="hidden md:block text-sm">
-                    <span class="font-medium hover:text-stone-500 transition-colors cursor-pointer" onclick="openAuthModal()">Acceder</span>
-                </div>
+            <div class="flex-1 md:flex-none flex items-center justify-end gap-5 md:gap-6">
+                <button id="desktopAuthBtn" class="relative z-50 flex items-center gap-2 font-medium text-sm hover:opacity-70 transition-opacity" onclick="handleAuthClick()">
+                    <span class="hidden md:inline" id="authBtnText">Acceder</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="md:hidden" id="authBtnIcon">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </button>
                 <button id="cartBtn" class="relative z-50 flex items-center gap-2 font-medium text-sm hover:opacity-70 transition-opacity">
                     <span class="hidden sm:inline">Carrito</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -90,8 +93,6 @@
         <a href="index.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Inicio</a>
         <a href="productos.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Productos</a>
         <a href="nosotros.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Nosotros</a>
-        <div class="w-16 h-px bg-stone-300 my-4"></div>
-        <button id="mobileAuthBtn" class="text-2xl font-medium text-stone-500 hover:text-stone-900 transition-colors" onclick="openAuthModal()">Acceder / Crear Cuenta</button>
     </div>
 
     <!-- Cart Overlay & Drawer -->

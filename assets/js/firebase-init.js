@@ -28,6 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const showLoginBtn = document.getElementById('showLoginBtn');
 
     // UI Toggles
+    window.handleAuthClick = () => {
+        if (currentUser) {
+            window.location.href = 'perfil.html';
+        } else {
+            openAuthModal();
+        }
+    };
+
     window.openAuthModal = () => {
         authModal.classList.remove('translate-y-full', 'opacity-0');
         authOverlay.classList.remove('opacity-0', 'pointer-events-none');
@@ -92,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.logoutUser = () => {
         auth.signOut().then(() => {
-            // Cart will be cleared and reset to anonymous local storage automatically by auth listener
+            window.location.href = 'index.html';
         });
     };
 
@@ -109,31 +117,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function updateAuthUI(user) {
-    const desktopAuthBtn = document.getElementById('desktopAuthBtn');
-    const mobileAuthBtn = document.getElementById('mobileAuthBtn');
+    const authBtnText = document.getElementById('authBtnText');
+    const authBtnIcon = document.getElementById('authBtnIcon');
 
     if (user) {
         // Logged In
         const shortEmail = user.email.split('@')[0];
-        if(desktopAuthBtn) {
-            desktopAuthBtn.innerHTML = `
-                <span class="font-bold border-b-2 border-stone-900 pb-1 cursor-pointer" onclick="logoutUser()">Salir (${shortEmail})</span>
-            `;
-        }
-        if(mobileAuthBtn) {
-            mobileAuthBtn.innerHTML = `<span onclick="logoutUser()">Salir (${shortEmail})</span>`;
-            mobileAuthBtn.onclick = null;
+        if(authBtnText) authBtnText.innerText = `Perfil (${shortEmail})`;
+        if(authBtnIcon) {
+            // Update icon to look "filled" or active
+            authBtnIcon.innerHTML = `<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4" fill="currentColor"/>`;
         }
     } else {
         // Logged Out
-        if(desktopAuthBtn) {
-            desktopAuthBtn.innerHTML = `
-                <span class="font-medium hover:text-stone-500 transition-colors cursor-pointer" onclick="openAuthModal()">Acceder</span>
-            `;
-        }
-        if(mobileAuthBtn) {
-            mobileAuthBtn.innerHTML = `Acceder / Crear Cuenta`;
-            mobileAuthBtn.onclick = openAuthModal;
+        if(authBtnText) authBtnText.innerText = "Acceder";
+        if(authBtnIcon) {
+            authBtnIcon.innerHTML = `<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>`;
         }
     }
 }
