@@ -222,6 +222,8 @@
 
     <script>
         // Override initial render for checkout page
+        let isSyncing = true;
+
         function renderCheckout() {
             const container = document.getElementById('checkoutItems');
             const subtotalLabel = document.getElementById('checkoutSubtotal');
@@ -230,10 +232,20 @@
 
             if (!container) return;
 
-            // Access global cart from cart.js
-            const currentCart = window.cart || cart || [];
+            // Use window.cart as the single source of truth
+            const currentCart = window.cart || [];
 
-            if (!currentCart || currentCart.length === 0) {
+            if (isSyncing && currentCart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="loading-spinner border-stone-300 border-t-stone-900 mx-auto mb-4"></div>
+                        <p class="text-stone-400 text-xs italic">Sincronizando tu cesta...</p>
+                    </div>
+                `;
+                return;
+            }
+
+            if (currentCart.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-8">
                         <p class="text-stone-400 italic mb-4">Tu cesta está vacía.</p>
@@ -275,11 +287,15 @@
 
         // Listen for cart updates from cart.js
         document.addEventListener('cartUpdated', () => {
+            isSyncing = false;
             renderCheckout();
         });
 
         // Recurring check for the first 3 seconds (to catch any late syncs)
-        const syncInterval = setInterval(renderCheckout, 500);
+        const syncInterval = setInterval(() => {
+            renderCheckout();
+            if (window.cart && window.cart.length > 0) isSyncing = false;
+        }, 500);
         setTimeout(() => clearInterval(syncInterval), 4000);
 
         // Auto-fill if user is logged in
@@ -289,6 +305,8 @@
                 if (nameInput && !nameInput.value) {
                     nameInput.value = user.displayName || user.email.split('@')[0];
                 }
+            } else {
+                isSyncing = false; // No sync if not logged in
             }
             renderCheckout();
         });
@@ -305,7 +323,7 @@
                 return;
             }
 
-            const currentCart = window.cart || cart || [];
+            const currentCart = window.cart || [];
             if (currentCart.length === 0) {
                 alert('Tu carrito está vacío.');
                 return;

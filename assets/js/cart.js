@@ -1,33 +1,53 @@
 const CART_STORAGE_KEY = 'mint_speciality_cart';
 
 // Init Cart State
+// Init Cart State
 window.cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
-let cart = window.cart;
+// We'll use window.cart as the single source of truth to avoid sync issues between variables
 
+// Sync Cart with Auth
 // Sync Cart with Auth
 window.syncCartWithAuth = async (user) => {
     if (user) {
-        // Load cart from firestore
         try {
             const docRef = db.collection('carts').doc(user.uid);
             const docSnap = await docRef.get();
+            
+            let cloudCart = [];
             if (docSnap.exists) {
-                cart = docSnap.data().items || [];
-            } else {
-                // If local cart exists, upload it, then clear it from local
-                if (cart.length > 0) {
-                    await docRef.set({ items: cart });
-                }
+                cloudCart = docSnap.data().items || [];
             }
+
+            // Merge Logic: Combine local cart with cloud cart
+            // This prevents losing items added before login or during sync
+            const localCart = [...window.cart];
+            const mergedCart = [...cloudCart];
+
+            localCart.forEach(localItem => {
+                const existingInCloud = mergedCart.find(item => item.id === localItem.id);
+                if (existingInCloud) {
+                    existingInCloud.quantity += localItem.quantity;
+                } else {
+                    mergedCart.push(localItem);
+                }
+            });
+
+            window.cart = mergedCart;
+            
+            // Save the merged result back to Firestore if it changed
+            if (localCart.length > 0) {
+                await docRef.set({ items: window.cart });
+            }
+            
             renderCart();
-            // Clear local storage cart
+            // Clear local storage cart since it's now in the cloud
             localStorage.removeItem(CART_STORAGE_KEY);
         } catch (error) {
-            console.error("Error fetching cart from Firestore:", error);
+            console.error("Error syncing cart with Firestore:", error);
         }
     } else {
         // Load cart from local storage
-        cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+        window.cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
         renderCart();
     }
 };
@@ -36,22 +56,23 @@ window.syncCartWithAuth = async (user) => {
 async function saveCart() {
     if (typeof currentUser !== 'undefined' && currentUser) {
         try {
-            await db.collection('carts').doc(currentUser.uid).set({ items: cart });
+            await db.collection('carts').doc(currentUser.uid).set({ items: window.cart });
         } catch (error) {
             console.error("Error saving cart to Firestore:", error);
         }
     } else {
-        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(window.cart));
     }
 }
 
 // Add Item
+// Add Item
 function addToCart(id, name, price, image) {
-    const existingItem = cart.find(item => item.id === id);
+    const existingItem = window.cart.find(item => item.id === id);
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({ id, name, price, image, quantity: 1 });
+        window.cart.push({ id, name, price, image, quantity: 1 });
     }
     saveCart();
     renderCart();
@@ -67,15 +88,17 @@ function addToCart(id, name, price, image) {
 }
 
 // Remove Item
+// Remove Item
 function removeFromCart(id) {
-    cart = cart.filter(item => item.id !== id);
+    window.cart = window.cart.filter(item => item.id !== id);
     saveCart();
     renderCart();
 }
 
 // Update Quantity
+// Update Quantity
 function updateQuantity(id, change) {
-    const item = cart.find(item => item.id === id);
+    const item = window.cart.find(item => item.id === id);
     if (item) {
         item.quantity += change;
         if (item.quantity <= 0) {
@@ -96,7 +119,7 @@ function renderCart() {
     const cartBadge = document.getElementById('cartBadge');
     
     // Update Badge
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = window.cart.reduce((sum, item) => sum + item.quantity, 0);
     if (cartBadge) {
         cartBadge.innerText = totalItems;
         cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
@@ -104,7 +127,7 @@ function renderCart() {
 
     if (!cartItemsContainer || !cartEmptyState || !cartFooter) return;
 
-    if (cart.length === 0) {
+    if (window.cart.length === 0) {
         cartEmptyState.style.display = 'flex';
         cartItemsContainer.style.display = 'none';
         cartFooter.style.display = 'none';
@@ -119,7 +142,7 @@ function renderCart() {
         let html = '';
         let subtotal = 0;
 
-        cart.forEach(item => {
+        window.cart.forEach(item => {
             const itemTotal = item.price * item.quantity;
             subtotal += itemTotal;
             html += `
@@ -173,13 +196,14 @@ function renderCart() {
         cartItemsContainer.insertAdjacentHTML('beforeend', shippingInfo);
         
         // Notify other components (like checkout page)
-        document.dispatchEvent(new CustomEvent('cartUpdated', { detail: { cart, subtotal } }));
+        document.dispatchEvent(new CustomEvent('cartUpdated', { detail: { cart: window.cart, subtotal } }));
     }
 }
 
 // Checkout Function
+// Checkout Function
 window.handleCheckout = function() {
-    if (cart.length === 0) {
+    if (window.cart.length === 0) {
         alert('Tu cesta está vacía.');
         return;
     }
