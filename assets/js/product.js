@@ -85,13 +85,16 @@ const MINT_PRODUCTS = {
         ]
     }
 };
+let currentProduct = null;
+let currentImageIdx = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
     if (productId && MINT_PRODUCTS[productId]) {
-        renderProduct(MINT_PRODUCTS[productId]);
+        currentProduct = MINT_PRODUCTS[productId];
+        renderProduct(currentProduct);
     } else if(window.location.pathname.includes('producto.html')) {
         // Fallback si no hay ID
         window.location.href = 'productos.html';
@@ -116,16 +119,22 @@ function renderProduct(product) {
 
     // Set Gallery if exists
     const galleryContainer = document.getElementById('p-gallery');
+    const galleryNav = document.getElementById('gallery-nav');
+    
     if (galleryContainer) {
         if (product.gallery && product.gallery.length > 0) {
             galleryContainer.style.display = 'grid';
+            if (galleryNav) galleryNav.style.display = 'flex';
+            currentImageIdx = 0;
+            
             galleryContainer.innerHTML = product.gallery.map((img, idx) => `
-                <div class="gallery-thumb cursor-pointer border-2 ${idx === 0 ? 'border-stone-900' : 'border-transparent'} p-2 bg-white rounded-xl transition-all hover:border-stone-400" onclick="switchImage(this, '${img}')">
+                <div class="gallery-thumb cursor-pointer border-2 ${idx === 0 ? 'border-stone-900' : 'border-transparent'} p-2 bg-white rounded-xl transition-all hover:border-stone-400" onclick="switchImage(this, '${img}', ${idx})">
                     <img src="${img}" alt="Thumbnail" class="w-full h-full object-contain blend-multiply">
                 </div>
             `).join('');
         } else {
             galleryContainer.style.display = 'none';
+            if (galleryNav) galleryNav.style.display = 'none';
         }
     }
 
@@ -154,7 +163,9 @@ function renderProduct(product) {
     };
 }
 
-function switchImage(thumb, imgSrc) {
+function switchImage(thumb, imgSrc, idx) {
+    if (idx !== undefined) currentImageIdx = idx;
+    
     // Update Main Image
     const mainImg = document.getElementById('p-image');
     mainImg.style.opacity = '0';
@@ -165,8 +176,32 @@ function switchImage(thumb, imgSrc) {
     }, 200);
 
     // Update Thumb Borders
-    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('border-stone-900'));
-    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.add('border-transparent'));
-    thumb.classList.remove('border-transparent');
-    thumb.classList.add('border-stone-900');
+    const thumbs = document.querySelectorAll('.gallery-thumb');
+    thumbs.forEach(t => {
+        t.classList.remove('border-stone-900');
+        t.classList.add('border-transparent');
+    });
+    
+    if (thumb) {
+        thumb.classList.remove('border-transparent');
+        thumb.classList.add('border-stone-900');
+    } else {
+        // Find thumb by index if no thumb element passed (from arrow nav)
+        if (thumbs[currentImageIdx]) {
+            thumbs[currentImageIdx].classList.remove('border-transparent');
+            thumbs[currentImageIdx].classList.add('border-stone-900');
+        }
+    }
+}
+
+function nextImage() {
+    if (!currentProduct || !currentProduct.gallery) return;
+    currentImageIdx = (currentImageIdx + 1) % currentProduct.gallery.length;
+    switchImage(null, currentProduct.gallery[currentImageIdx]);
+}
+
+function prevImage() {
+    if (!currentProduct || !currentProduct.gallery) return;
+    currentImageIdx = (currentImageIdx - 1 + currentProduct.gallery.length) % currentProduct.gallery.length;
+    switchImage(null, currentProduct.gallery[currentImageIdx]);
 }
