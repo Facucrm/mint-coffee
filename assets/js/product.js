@@ -65,6 +65,11 @@ const MINT_PRODUCTS = {
         tagline: 'The Complete Experience',
         price: 14.99,
         image: './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png',
+        gallery: [
+            './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png',
+            './img/Gemini_Generated_Image_kc4kbpkc4kbpkc4k.png',
+            './img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png'
+        ],
         description: 'El surtido definitivo para mantener tu semana al máximo nivel. Este pack ahorro incluye 2 latas de MINT Cold Brew Original, 2 latas de Caramel Cold Brew y 2 latas de MINT Matcha Latte. Disfruta de la variedad perfecta para alternar entre energía pura, indulgencia dulce y enfoque prolongado. Ahorras más de 5€ respecto a la compra individual.',
         tastingNotes: ['Variedad Completa', 'Ahorro Extra', 'Energía 24/7'],
         nutrition: {
@@ -109,6 +114,21 @@ function renderProduct(product) {
         `<span class="bg-stone-200 text-stone-700 px-4 py-1 text-sm font-bold uppercase tracking-widest rounded-full">${note}</span>`
     ).join('');
 
+    // Set Gallery if exists
+    const galleryContainer = document.getElementById('p-gallery');
+    if (galleryContainer) {
+        if (product.gallery && product.gallery.length > 0) {
+            galleryContainer.style.display = 'grid';
+            galleryContainer.innerHTML = product.gallery.map((img, idx) => `
+                <div class="gallery-thumb cursor-pointer border-2 ${idx === 0 ? 'border-stone-900' : 'border-transparent'} p-2 bg-white rounded-xl transition-all hover:border-stone-400" onclick="switchImage(this, '${img}')">
+                    <img src="${img}" alt="Thumbnail" class="w-full h-full object-contain blend-multiply">
+                </div>
+            `).join('');
+        } else {
+            galleryContainer.style.display = 'none';
+        }
+    }
+
     // Set Nutrition Info
     document.getElementById('n-cal').textContent = product.nutrition.calories;
     document.getElementById('n-sugar').textContent = product.nutrition.sugar;
@@ -132,4 +152,21 @@ function renderProduct(product) {
     addBtn.onclick = () => {
         addToCart(product.id, product.name, product.price, product.image);
     };
+}
+
+function switchImage(thumb, imgSrc) {
+    // Update Main Image
+    const mainImg = document.getElementById('p-image');
+    mainImg.style.opacity = '0';
+    
+    setTimeout(() => {
+        mainImg.src = imgSrc;
+        mainImg.style.opacity = '1';
+    }, 200);
+
+    // Update Thumb Borders
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('border-stone-900'));
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.add('border-transparent'));
+    thumb.classList.remove('border-transparent');
+    thumb.classList.add('border-stone-900');
 }
