@@ -225,15 +225,22 @@
     </header>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobileMenu" class="fixed inset-0 bg-stone-50 z-40 transform -translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center justify-center space-y-8 md:hidden">
-        <a href="index.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Inicio</a>
-        <div class="flex flex-col items-center space-y-4">
-            <span class="text-xs font-bold tracking-[0.3em] text-stone-400 uppercase">Colección</span>
-            <a href="productos.html?tab=lattes" class="text-3xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Especialidad Latte</a>
-            <a href="productos.html?tab=beans" class="text-3xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Especialidad Grano</a>
+    <div id="mobileMenu" class="fixed inset-0 bg-stone-50 z-40 transform -translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center justify-center space-y-10 md:hidden">
+        <a href="index.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors uppercase">Inicio</a>
+        
+        <div class="flex flex-col items-center">
+            <button onclick="toggleMobileSubmenu()" class="flex items-center gap-3 text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors uppercase group">
+                Colección
+                <svg id="mobileSubmenuArrow" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div id="mobileSubmenu" class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out flex flex-col items-center">
+                <a href="productos.html?tab=lattes" class="text-2xl font-bold tracking-tight text-stone-400 hover:text-stone-900 transition-colors mt-6 uppercase">Especialidad Latte</a>
+                <a href="productos.html?tab=beans" class="text-2xl font-bold tracking-tight text-stone-400 hover:text-stone-900 transition-colors mt-4 uppercase">Especialidad Grano</a>
+            </div>
         </div>
-        <a href="nosotros.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Nosotros</a>
-        <a href="contacto.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Contacto</a>
+
+        <a href="nosotros.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors uppercase">Nosotros</a>
+        <a href="contacto.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors uppercase">Contacto</a>
     </div>
 
     <!-- Cart Overlay & Drawer -->
@@ -270,11 +277,26 @@
     <main class="min-h-screen py-16 px-6">
         <div class="max-w-7xl mx-auto">
             <header class="text-center mb-24">
-                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-4 uppercase">The Core Collection</h1>
-                <p class="text-stone-500 font-medium text-lg max-w-2xl mx-auto">
+                <h1 id="catalog-title" class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-4 uppercase">The Core Collection</h1>
+                <p id="catalog-desc" class="text-stone-500 font-medium text-lg max-w-2xl mx-auto">
                     Sophisticated energy for the modern high-performer. 18-hour slow extraction. Ceremonial grade matcha. Zero compromise.
                 </p>
             </header>
+
+            <!-- Tab Switcher -->
+            <div class="flex justify-center mb-16">
+                <div class="inline-flex bg-stone-100 p-1 rounded-full border border-stone-200">
+                    <button id="tab-lattes" onclick="switchTab('lattes')" class="px-8 py-3 rounded-full text-sm font-bold uppercase tracking-widest transition-all bg-stone-900 text-white shadow-lg">Lattes & RTD</button>
+                    <button id="tab-beans" onclick="switchTab('beans')" class="px-8 py-3 rounded-full text-sm font-bold uppercase tracking-widest transition-all text-stone-500 hover:text-stone-900">Café en Grano</button>
+                </div>
+            </div>
+
+            <!-- Section 1: Lattes & RTD -->
+            <div id="section-lattes" class="tab-content">
+                <div class="mb-12 border-b border-stone-200 pb-4">
+                    <h2 class="text-3xl font-extrabold tracking-tight">Ready-To-Drink Lattes & Cold Brews.</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
 
                     
                     <div class="relative w-full aspect-[4/5] bg-stone-100/50 flex items-center justify-center p-8 overflow-hidden cursor-pointer" onclick="window.location.href='producto.html?id=mint-black'">
@@ -345,137 +367,105 @@
                         <h3 class="text-2xl font-bold tracking-tight mb-3 cursor-pointer hover:text-stone-600 transition-colors" onclick="window.location.href='producto.html?id=mint-matcha'">MINT Matcha Latte</h3>
                         <p class="text-stone-500 text-sm mb-4 leading-relaxed">
                             Matcha grado ceremonial de Uji, Japón, combinado con leche de avena premium. Energía sostenida y antioxidantes en un sorbo suave.
-                        </p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Section 2: Beans & Powder -->
-            <div id="section-beans" class="tab-content hidden">
+            <!-- Section 2: Speciality Coffee Beans & Matcha Powder -->
+            <div id="section-beans" class="hidden">
                 <div class="mb-12 border-b border-stone-200 pb-4">
-                    <h2 class="text-3xl font-extrabold tracking-tight">Speciality Coffee Beans & Matcha Powder.</h2>
+                    <h2 class="text-3xl font-extrabold tracking-tight">Speciality Whole Beans & Premium Powders.</h2>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-                    <!-- Product 4: Granos Arábicos -->
-                <div class="product-card group relative bg-stone-50 border border-stone-200 flex flex-col transition-shadow duration-500 hover:shadow-2xl hover:border-transparent overflow-hidden">
-                    <video class="product-card-video" src="./videos%20productos/video%20Premium%20Cold%20Brew%20.webm" loop muted playsinline></video>
-                    <div class="absolute top-4 right-4 bg-stone-900 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest z-10">
-                        Luxury Commodity
-                    </div>
                     
-                    <div class="relative w-full aspect-[4/5] bg-stone-100/50 flex items-center justify-center p-8 overflow-hidden cursor-pointer" onclick="window.location.href='productos/granos-arabicos.html'">
-                        <img src="./img/cafe arabico.jpg" alt="Bolsa de café en grano MINT Granos Arábicos" class="w-[70%] object-contain blend-multiply transition-transform duration-700 group-hover:scale-110">
-                        
-                        <div class="add-to-cart-reveal absolute bottom-0 left-0 w-full p-4 flex justify-center z-20">
-                            <button onclick="addToCart('granos-arabicos', 'GRANOS ARÁBICOS', 3.40, './img/cafe arabico.jpg')" class="w-full bg-stone-900 text-white py-4 font-semibold tracking-wide hover:bg-black transition-colors shadow-xl">
-                                Añadir al Carrito - 3,40€
-                            </button>
+                    <!-- Product: Granos Arábicos -->
+                    <div class="product-card group relative bg-stone-50 border border-stone-200 flex flex-col transition-shadow duration-500 hover:shadow-2xl hover:border-transparent overflow-hidden">
+                        <div class="relative w-full aspect-[4/5] bg-stone-100/50 flex items-center justify-center p-8 overflow-hidden cursor-pointer" onclick="window.location.href='productos/granos-arabicos.html'">
+                            <img src="./img/cafe arabico.jpg" alt="Pack de Café de Especialidad Granos Arábicos" class="w-[70%] object-contain blend-multiply transition-transform duration-700 group-hover:scale-110">
+                            <div class="add-to-cart-reveal absolute bottom-0 left-0 w-full p-4 flex justify-center z-20">
+                                <button onclick="addToCart('granos-arabicos', 'Granos Arábicos (Speciality)', 18.50, './img/cafe arabico.jpg')" class="w-full bg-stone-900 text-white py-4 font-semibold tracking-wide hover:bg-black transition-colors shadow-xl">
+                                    Añadir al Carrito - 18,50€
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-8 text-center bg-stone-50 flex-1 flex flex-col justify-center">
+                            <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2">Ethiopia / Brazil Blend</span>
+                            <h3 class="text-2xl font-bold tracking-tight mb-3 cursor-pointer" onclick="window.location.href='productos/granos-arabicos.html'">Granos Arábicos</h3>
+                            <p class="text-stone-500 text-sm mb-4 leading-relaxed">Un blend equilibrado con notas cítricas y un retrogusto dulce a caramelo. Tueste medio ideal para filtro o espresso.</p>
                         </div>
                     </div>
-                    
-                    <div class="p-8 text-center bg-stone-50 flex-1 flex flex-col justify-center">
-                        <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2 cursor-pointer" onclick="window.location.href='productos/granos-arabicos.html'">Premium Speciality Beans</span>
-                        <h3 class="text-2xl font-bold tracking-tight mb-3 cursor-pointer hover:text-stone-600 transition-colors" onclick="window.location.href='productos/granos-arabicos.html'">GRANOS ARÁBICOS</h3>
-                        <p class="text-stone-500 text-sm mb-4 leading-relaxed">
-                            Selección de altura. Tueste artesanal para un perfil equilibrado con notas a chocolate y nuez.
-                        </p>
-                    </div>
-                </div>
 
-                <!-- Product 5: Granos Colombianos -->
-                <div class="product-card group relative bg-stone-50 border border-stone-200 flex flex-col transition-shadow duration-500 hover:shadow-2xl hover:border-transparent overflow-hidden">
-                    <video class="product-card-video" src="./videos%20productos/Video%20Caramel%20Cold%20Brew.webm" loop muted playsinline></video>
-                    <div class="absolute top-4 right-4 bg-stone-900 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest z-10">
-                        Luxury Commodity
-                    </div>
-                    
-                    <div class="relative w-full aspect-[4/5] bg-stone-100/50 flex items-center justify-center p-8 overflow-hidden cursor-pointer" onclick="window.location.href='productos/granos-colombianos.html'">
-                        <img src="./img/cafe colombiano.jpg" alt="Bolsa de café en grano MINT Granos Colombianos Origen Huila" class="w-[70%] object-contain blend-multiply transition-transform duration-700 group-hover:scale-110">
-                        
-                        <div class="add-to-cart-reveal absolute bottom-0 left-0 w-full p-4 flex justify-center z-20">
-                            <button onclick="addToCart('granos-colombianos', 'GRANOS COLOMBIANOS', 3.40, './img/cafe colombiano.jpg')" class="w-full bg-stone-900 text-white py-4 font-semibold tracking-wide hover:bg-black transition-colors shadow-xl">
-                                Añadir al Carrito - 3,40€
-                            </button>
+                    <!-- Product: Granos Colombianos -->
+                    <div class="product-card group relative bg-stone-50 border border-stone-200 flex flex-col transition-shadow duration-500 hover:shadow-2xl hover:border-transparent overflow-hidden">
+                        <div class="relative w-full aspect-[4/5] bg-stone-100/50 flex items-center justify-center p-8 overflow-hidden cursor-pointer" onclick="window.location.href='productos/granos-colombianos.html'">
+                            <img src="./img/cafe colombiano.jpg" alt="Pack de Café de Especialidad Granos Colombianos Huila" class="w-[70%] object-contain blend-multiply transition-transform duration-700 group-hover:scale-110">
+                            <div class="add-to-cart-reveal absolute bottom-0 left-0 w-full p-4 flex justify-center z-20">
+                                <button onclick="addToCart('granos-colombianos', 'Granos Colombianos (Huila)', 21.00, './img/cafe colombiano.jpg')" class="w-full bg-stone-900 text-white py-4 font-semibold tracking-wide hover:bg-black transition-colors shadow-xl">
+                                    Añadir al Carrito - 21,00€
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-8 text-center bg-stone-50 flex-1 flex flex-col justify-center">
+                            <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2">Huila Region / Single Origin</span>
+                            <h3 class="text-2xl font-bold tracking-tight mb-3 cursor-pointer" onclick="window.location.href='productos/granos-colombianos.html'">Granos Colombianos</h3>
+                            <p class="text-stone-500 text-sm mb-4 leading-relaxed">Cuerpo intenso y acidez brillante. Notas profundas de frutos rojos y panela. 100% origen único seleccionado.</p>
                         </div>
                     </div>
-                    
-                    <div class="p-8 text-center bg-stone-50 flex-1 flex flex-col justify-center">
-                        <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2 cursor-pointer" onclick="window.location.href='productos/granos-colombianos.html'">Single Origin Huila</span>
-                        <h3 class="text-2xl font-bold tracking-tight mb-3 cursor-pointer hover:text-stone-600 transition-colors" onclick="window.location.href='productos/granos-colombianos.html'">GRANOS COLOMBIANOS</h3>
-                        <p class="text-stone-500 text-sm mb-4 leading-relaxed">
-                            Directo de Huila, Colombia. Un café vibrante con acidez cítrica y un final dulce a caramelo.
-                        </p>
-                    </div>
-                </div>
 
-                <!-- Product 6: Té Matcha -->
-                <div class="product-card group relative bg-stone-50 border border-stone-200 flex flex-col transition-shadow duration-500 hover:shadow-2xl hover:border-transparent overflow-hidden">
-                    <video class="product-card-video" src="./videos%20productos/Video%20Matcha%20Latte.webm" loop muted playsinline></video>
-                    <div class="absolute top-4 right-4 bg-stone-900 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest z-10">
-                        Luxury Commodity
-                    </div>
-                    
-                    <div class="relative w-full aspect-[4/5] bg-stone-100/50 flex items-center justify-center p-8 overflow-hidden cursor-pointer" onclick="window.location.href='productos/te-matcha.html'">
-                        <img src="./img/te matcha.jpg" alt="Lata de Té Matcha MINT Grado Ceremonial en polvo" class="w-[70%] object-contain blend-multiply transition-transform duration-700 group-hover:scale-110">
-                        
-                        <div class="add-to-cart-reveal absolute bottom-0 left-0 w-full p-4 flex justify-center z-20">
-                            <button onclick="addToCart('te-matcha', 'TÉ MATCHA', 3.40, './img/te matcha.jpg')" class="w-full bg-stone-900 text-white py-4 font-semibold tracking-wide hover:bg-black transition-colors shadow-xl">
-                                Añadir al Carrito - 3,40€
-                            </button>
+                    <!-- Product: Té Matcha -->
+                    <div class="product-card group relative bg-stone-50 border border-stone-200 flex flex-col transition-shadow duration-500 hover:shadow-2xl hover:border-transparent overflow-hidden">
+                        <div class="relative w-full aspect-[4/5] bg-stone-100/50 flex items-center justify-center p-8 overflow-hidden cursor-pointer" onclick="window.location.href='productos/te-matcha.html'">
+                            <img src="./img/te matcha.jpg" alt="Té Matcha Grado Ceremonial Premium" class="w-[70%] object-contain blend-multiply transition-transform duration-700 group-hover:scale-110">
+                            <div class="add-to-cart-reveal absolute bottom-0 left-0 w-full p-4 flex justify-center z-20">
+                                <button onclick="addToCart('te-matcha', 'Té Matcha (Ceremonial Grade)', 24.90, './img/te matcha.jpg')" class="w-full bg-stone-900 text-white py-4 font-semibold tracking-wide hover:bg-black transition-colors shadow-xl">
+                                    Añadir al Carrito - 24,90€
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="p-8 text-center bg-stone-50 flex-1 flex flex-col justify-center">
-                        <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2 cursor-pointer" onclick="window.location.href='productos/te-matcha.html'">Ceremonial Grade Powder</span>
-                        <h3 class="text-2xl font-bold tracking-tight mb-3 cursor-pointer hover:text-stone-600 transition-colors" onclick="window.location.href='productos/te-matcha.html'">TÉ MATCHA</h3>
-                        <p class="text-stone-500 text-sm mb-4 leading-relaxed">
-                            Antioxidantes y enfoque puro. Matcha japonés de grado ceremonial para una claridad mental absoluta.
-                        </p>
+                        <div class="p-8 text-center bg-stone-50 flex-1 flex flex-col justify-center">
+                            <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2">Uji, Japan / Ceremonial</span>
+                            <h3 class="text-2xl font-bold tracking-tight mb-3 cursor-pointer" onclick="window.location.href='productos/te-matcha.html'">Té Matcha</h3>
+                            <p class="text-stone-500 text-sm mb-4 leading-relaxed">Matcha de la más alta calidad, recolectado a mano en Uji. Sabor umami intenso, color verde vibrante y textura sedosa.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Section 3: Bundles (Show with Lattes) -->
-            <div id="section-bundles" class="tab-content active">
+            <!-- Section 3: Bundles -->
+            <div id="section-bundles">
                 <div class="mb-12 border-b border-stone-200 pb-4">
-                    <h2 class="text-3xl font-extrabold tracking-tight">The Experience Sets.</h2>
+                    <h2 class="text-3xl font-extrabold tracking-tight">The Performance Bundles.</h2>
                 </div>
                 <div class="grid grid-cols-1 gap-8">
-                    <!-- Product 4: The 6-Pack Bundle -->
-                <div class="product-card group relative bg-stone-50 border border-stone-200 flex flex-col md:flex-row col-span-1 md:col-span-2 lg:col-span-3 transition-shadow duration-500 hover:shadow-2xl hover:border-transparent overflow-hidden mt-8">
-                    <video class="product-card-video" src="./videos%20productos/video%20Premium%20Cold%20Brew%20.webm" loop muted playsinline></video>
-                    <div class="absolute top-4 right-4 bg-stone-900 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest z-10">
-                        Best Value
-                    </div>
-                    
-                    <!-- CSS Overlapping Image Container -->
-                    <div class="relative w-full md:w-1/2 aspect-[4/5] md:aspect-auto bg-stone-100/50 flex items-center justify-center p-8 overflow-hidden cursor-pointer" onclick="window.location.href='producto.html?id=mint-6pack'">
-                        <div class="relative w-full h-full flex items-center justify-center scale-90 md:scale-100 group-hover:scale-105 transition-transform duration-700">
-                            <img src="./img/Gemini_Generated_Image_kc4kbpkc4kbpkc4k.png" alt="Caramel" class="absolute w-[35%] md:w-[40%] object-contain blend-multiply filter drop-shadow-xl -translate-x-[40%] rotate-[-10deg] z-10">
-                            <img src="./img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png" alt="Matcha" class="absolute w-[35%] md:w-[40%] object-contain blend-multiply filter drop-shadow-xl translate-x-[40%] rotate-[10deg] z-10">
-                            <img src="./img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png" alt="Black" class="absolute w-[40%] md:w-[45%] object-contain blend-multiply filter drop-shadow-2xl z-20">
-                        </div>
-                    </div>
-                    
-                    <div class="p-8 md:p-16 text-left bg-stone-50 flex-1 flex flex-col justify-center border-t md:border-t-0 md:border-l border-stone-200">
-                        <span class="text-xs font-bold tracking-widest text-stone-400 uppercase mb-2 cursor-pointer" onclick="window.location.href='producto.html?id=mint-6pack'">The Complete Experience</span>
-                        <h3 class="text-4xl md:text-5xl font-bold tracking-tight mb-4 cursor-pointer hover:text-stone-600 transition-colors" onclick="window.location.href='producto.html?id=mint-6pack'">The 6-Pack Collection</h3>
-                        <p class="text-stone-500 text-lg mb-8 leading-relaxed max-w-lg">
-                            Descubre el surtido definitivo para la vida en el campus. Este pack incluye <strong>2 MINT Cold Brew</strong>, <strong>2 Caramel Cold Brew</strong> y <strong>2 MINT Matcha Latte</strong>. La rotación perfecta de energía, enfoque y dulzura para tu semana, con un ahorro excepcional.
-                        </p>
-                        
-                        <div class="mt-auto pt-6 border-t border-stone-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                            <div class="flex flex-col">
-                                <span class="text-3xl font-extrabold tracking-tight">14,99€</span>
-                                <span class="text-sm text-stone-400 line-through">Valorado en 20,40€</span>
+                    <!-- Product 4: 6-Pack -->
+                    <div class="product-card group relative bg-stone-50 border border-stone-200 flex flex-col md:flex-row transition-shadow duration-500 hover:shadow-2xl hover:border-transparent overflow-hidden">
+                        <div class="relative w-full md:w-1/2 aspect-[16/9] bg-stone-100/50 flex items-center justify-center p-12 overflow-hidden cursor-pointer" onclick="window.location.href='producto.html?id=mint-6pack'">
+                            <div class="relative w-full h-full flex items-center justify-center scale-90 md:scale-100 group-hover:scale-105 transition-transform duration-700">
+                                <img src="./img/Gemini_Generated_Image_kc4kbpkc4kbpkc4k.png" alt="Caramel" class="absolute w-[30%] object-contain blend-multiply filter drop-shadow-xl -translate-x-[40%] rotate-[-10deg] z-10">
+                                <img src="./img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png" alt="Matcha" class="absolute w-[30%] object-contain blend-multiply filter drop-shadow-xl translate-x-[40%] rotate-[10deg] z-10">
+                                <img src="./img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png" alt="Black" class="absolute w-[35%] object-contain blend-multiply filter drop-shadow-2xl z-20">
                             </div>
-                            <button onclick="addToCart('mint-6pack', 'The 6-Pack Collection', 14.99, './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png')" class="w-full sm:w-auto bg-stone-900 text-white px-10 py-5 font-semibold tracking-wide hover:bg-black transition-colors shadow-xl text-lg flex items-center justify-center gap-2">
-                                Añadir Pack
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </button>
+                        </div>
+                        <div class="p-12 md:w-1/2 flex flex-col justify-center bg-stone-50">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="bg-stone-900 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest">Best Value</span>
+                                <span class="text-xs font-bold tracking-widest text-stone-400 uppercase">Weekly Focus Kit</span>
+                            </div>
+                            <h3 class="text-4xl font-extrabold tracking-tighter mb-4 cursor-pointer hover:text-stone-600 transition-colors" onclick="window.location.href='producto.html?id=mint-6pack'">MINT 6-Pack Mix</h3>
+                            <p class="text-stone-500 text-lg mb-8 leading-relaxed">
+                                Asegura tu semana de máximo rendimiento. Un pack variado con nuestras 3 variedades estrella. 2x Black, 2x Caramel, 2x Matcha. La rotación perfecta para tu semana.
+                            </p>
+                            <div class="flex items-center gap-6">
+                                <div class="flex flex-col">
+                                    <span class="text-3xl font-extrabold tracking-tight">19,90€</span>
+                                    <span class="text-sm text-stone-400 line-through">20,40€</span>
+                                </div>
+                                <button onclick="addToCart('mint-6pack', 'MINT 6-Pack Mix', 19.90, './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png')" class="bg-stone-900 text-white px-8 py-4 font-bold tracking-widest uppercase hover:bg-black transition-all rounded-none flex items-center justify-center gap-3 shadow-lg">
+                                    Añadir Pack
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
@@ -512,6 +502,9 @@
             const bundleSection = document.getElementById('section-bundles');
 
             if (tab === 'lattes') {
+                document.getElementById('catalog-title').textContent = 'The Core Collection';
+                document.getElementById('catalog-desc').textContent = 'Sophisticated energy for the modern high-performer. 18-hour slow extraction. Ceremonial grade matcha.';
+                
                 // Update buttons
                 lattesBtn.classList.add('bg-stone-900', 'text-white', 'shadow-lg');
                 lattesBtn.classList.remove('text-stone-500');
@@ -523,6 +516,9 @@
                 beansSection.classList.add('hidden');
                 bundleSection.classList.remove('hidden');
             } else {
+                document.getElementById('catalog-title').textContent = 'Speciality Beans';
+                document.getElementById('catalog-desc').textContent = 'The finest selection of whole beans for those who appreciate the craft of brewing at home.';
+
                 // Update buttons
                 beansBtn.classList.add('bg-stone-900', 'text-white', 'shadow-lg');
                 beansBtn.classList.remove('text-stone-500');
@@ -540,15 +536,27 @@
         }
 
         // Handle URL Tab selection
-        window.addEventListener('load', () => {
+        function syncTabFromUrl() {
             const urlParams = new URLSearchParams(window.location.search);
             const tab = urlParams.get('tab');
             if (tab === 'beans') {
                 switchTab('beans');
-            } else if (tab === 'lattes') {
+            } else if (tab === 'lattes' || !tab) {
                 switchTab('lattes');
             }
-        });
+        }
+
+        window.addEventListener('load', syncTabFromUrl);
+        window.addEventListener('popstate', syncTabFromUrl);
+        
+        // Safety check for same-page link clicks
+        let lastSearch = window.location.search;
+        setInterval(() => {
+            if (window.location.search !== lastSearch) {
+                lastSearch = window.location.search;
+                syncTabFromUrl();
+            }
+        }, 100);
 
         // Mobile Autoplay Logic
         const observerOptions = {

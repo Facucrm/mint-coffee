@@ -256,6 +256,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 menuIconClose.classList.add('hidden');
                 menuIconOpen.classList.remove('hidden');
                 document.body.style.overflow = '';
+                
+                // Reset submenu if open
+                const submenu = document.getElementById('mobileSubmenu');
+                const arrow = document.getElementById('mobileSubmenuArrow');
+                if (submenu) submenu.style.maxHeight = '0px';
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
             } else {
                 // Open menu
                 mobileMenu.classList.remove('-translate-y-full');
@@ -266,6 +272,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    window.toggleMobileSubmenu = function() {
+        const submenu = document.getElementById('mobileSubmenu');
+        const arrow = document.getElementById('mobileSubmenuArrow');
+        if (submenu && arrow) {
+            const isOpen = submenu.style.maxHeight && submenu.style.maxHeight !== '0px';
+            if (isOpen) {
+                submenu.style.maxHeight = '0px';
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                submenu.style.maxHeight = '200px'; // Adjust as needed for content
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+    };
 
     // Initial render
     renderCart();
