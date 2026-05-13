@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="./favicon.png">
     
-    <title>MINT Speciality | Café de Especialidad en Lata en Málaga</title>
-    <meta name="description" content="Disfruta del mejor café de especialidad y matcha RTD en el Campus de Teatinos. Sin colas, 100% enfoque. ¡Haz tu pedido online y recógelo hoy!">
+    <title>MINT Speciality | The New Standard of Energy</title>
+    <meta name="description" content="Premium Speciality Coffee & Ceremonial Grade Matcha RTD. Crafted for high-performers. Peak performance, anytime, anywhere. Nationwide shipping.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,6 +40,44 @@
         ::-webkit-scrollbar-track { background: #f5f5f4; }
         ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+
+        /* Dropdown Logic */
+        .nav-dropdown { position: relative; display: inline-block; }
+        .nav-dropdown-content { 
+            position: absolute; 
+            top: 100%; 
+            left: 50%; 
+            transform: translateX(-50%) translateY(10px);
+            background: white; 
+            border: 1px solid #e5e7eb; 
+            padding: 0.75rem 0; 
+            min-width: 220px; 
+            opacity: 0; 
+            pointer-events: none; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            z-index: 100;
+            border-radius: 12px;
+        }
+        .nav-dropdown:hover .nav-dropdown-content { 
+            opacity: 1; 
+            pointer-events: auto; 
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-link {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: #1c1917;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .nav-dropdown-link:hover {
+            background-color: #f5f5f4;
+            color: #1c1917;
+            padding-left: 1.75rem;
+        }
 
         /* Dynamic Video Hover Effect */
         .product-card {
@@ -120,7 +158,16 @@
             <div class="flex-1 md:flex-none">
                 <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
                     <a href="index.html" class="text-stone-900 font-bold border-b-2 border-stone-900 pb-1">Inicio</a>
-                    <a href="productos.html" class="hover:text-stone-500 transition-colors">Productos</a>
+                    <div class="nav-dropdown">
+                        <a href="productos.html" class="hover:text-stone-500 transition-colors flex items-center gap-1">
+                            Productos
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </a>
+                        <div class="nav-dropdown-content">
+                            <a href="productos.html?tab=lattes" class="nav-dropdown-link">Café Especialidad Latte</a>
+                            <a href="productos.html?tab=beans" class="nav-dropdown-link">Café Especialidad en Grano</a>
+                        </div>
+                    </div>
                     <a href="nosotros.html" class="hover:text-stone-500 transition-colors">Nosotros</a>
                     <a href="contacto.html" class="hover:text-stone-500 transition-colors">Contacto</a>
                 </nav>
@@ -163,7 +210,11 @@
     <!-- Mobile Menu Overlay -->
     <div id="mobileMenu" class="fixed inset-0 bg-stone-50 z-40 transform -translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center justify-center space-y-8 md:hidden">
         <a href="index.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Inicio</a>
-        <a href="productos.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Productos</a>
+        <div class="flex flex-col items-center space-y-4">
+            <span class="text-xs font-bold tracking-[0.3em] text-stone-400 uppercase">Colección</span>
+            <a href="productos.html?tab=lattes" class="text-3xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Especialidad Latte</a>
+            <a href="productos.html?tab=beans" class="text-3xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Especialidad Grano</a>
+        </div>
         <a href="nosotros.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Nosotros</a>
         <a href="contacto.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Contacto</a>
     </div>
@@ -219,9 +270,9 @@
                 <!-- Dynamic Typography Container -->
                 <div class="relative z-20 text-center px-6 flex flex-col items-center justify-center h-32 md:h-48 mb-8 md:mb-12 mt-4 md:mt-8">
                     <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter leading-[0.9] text-stone-900 absolute w-full flex items-center justify-center">
-                        <span id="hero-hl-1" class="absolute">CAFÉ DE ESPECIALIDAD.</span>
-                        <span id="hero-hl-2" class="absolute opacity-0 translate-y-10 text-stone-600">EN LATA. EN MÁLAGA.</span>
-                        <span id="hero-hl-3" class="absolute opacity-0 translate-y-10 whitespace-nowrap text-stone-900">MINT Speciality.<br><span class="text-3xl md:text-5xl text-stone-500">Mejor Café en Teatinos.</span></span>
+                        <span id="hero-hl-1" class="absolute">ELEVATE YOUR FOCUS.</span>
+                        <span id="hero-hl-2" class="absolute opacity-0 translate-y-10 text-stone-600">THE NEW STANDARD.</span>
+                        <span id="hero-hl-3" class="absolute opacity-0 translate-y-10 whitespace-nowrap text-stone-900">MINT Speciality.<br><span class="text-3xl md:text-5xl text-stone-500">Peak Performance. Anywhere.</span></span>
                     </h1>
                 </div>
 
@@ -239,8 +290,8 @@
 
                 <!-- Final State Content -->
                 <div id="hero-final-content" class="relative z-30 text-center px-6 mt-8 opacity-0 translate-y-10 flex flex-col items-center pointer-events-none">
-                    <p class="text-lg md:text-xl text-stone-500 max-w-xl mx-auto font-medium mb-6 md:mb-8">
-                        Matcha Ready-To-Drink y Café de Especialidad en Lata. Diseñado para la vida universitaria en la UMA Málaga.
+                    <p class="text-lg md:text-xl text-stone-500 max-w-xl mx-auto font-medium mb-6 md:mb-8 uppercase tracking-widest text-[10px]">
+                        Crafted in Málaga for the modern world.
                     </p>
                     <button onclick="addBundleToCart()" class="pointer-events-auto group relative bg-stone-900 text-white px-8 py-4 font-semibold tracking-wide hover:bg-black transition-colors shadow-2xl overflow-hidden rounded-full cursor-pointer">
                         <span class="relative z-10 flex items-center gap-2 group-hover:-translate-y-10 transition-transform duration-300">
@@ -266,9 +317,9 @@
         <section class="py-32 px-6 bg-stone-100/50">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2 class="text-xs font-bold tracking-[0.3em] text-stone-400 uppercase mb-4">El mejor café para llevar en Teatinos</h2>
-                    <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter">Cold Brew Artesanal y Matcha</h2>
-                    <p class="text-stone-500 font-medium text-lg mt-4">Calidad premium. Listos para impulsar tu día en el Campus de la UMA.</p>
+                    <h2 class="text-xs font-bold tracking-[0.3em] text-stone-400 uppercase mb-4">Lujo asequible café & Matcha</h2>
+                    <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter">THE CORE COLLECTION</h2>
+                    <p class="text-stone-500 font-medium text-lg mt-4">Pure performance. Minimalist design. Zero compromise.</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
@@ -323,24 +374,24 @@
                     <div class="w-16 h-16 rounded-full bg-stone-800 flex items-center justify-center mb-6 text-stone-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold tracking-tight mb-3">Especialidad Local</h3>
-                    <p class="text-stone-400 leading-relaxed">Granos seleccionados y tostados localmente.</p>
+                    <h3 class="text-xl font-bold tracking-tight mb-3 uppercase text-xs">Performance RTD</h3>
+                    <p class="text-stone-400 leading-relaxed text-sm">Designed for high-performers who value time and quality.</p>
                 </div>
                 
                 <div class="value-prop flex flex-col items-center">
                     <div class="w-16 h-16 rounded-full bg-stone-800 flex items-center justify-center mb-6 text-stone-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold tracking-tight mb-3">Listo para tomar</h3>
-                    <p class="text-stone-400 leading-relaxed">Formato perfecto para llevar tu energía.</p>
+                    <h3 class="text-xl font-bold tracking-tight mb-3 uppercase text-xs">Extraction Excellence</h3>
+                    <p class="text-stone-400 leading-relaxed text-sm">18-hour slow cold extraction for a smooth, low-acid finish.</p>
                 </div>
                 
                 <div class="value-prop flex flex-col items-center">
                     <div class="w-16 h-16 rounded-full bg-stone-800 flex items-center justify-center mb-6 text-stone-300">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold tracking-tight mb-3">PET Sostenible</h3>
-                    <p class="text-stone-400 leading-relaxed">Envases 100% reciclables. Comprometidos.</p>
+                    <h3 class="text-xl font-bold tracking-tight mb-3 uppercase text-xs">Luxury Commodity</h3>
+                    <p class="text-stone-400 leading-relaxed text-sm">A design statement for your modern workspace or lifestyle.</p>
                 </div>
             </div>
         </section>
@@ -352,19 +403,20 @@
             <div class="flex flex-col items-center md:items-start">
                 <img src="./assets/mint_logo.png" alt="MINT Logo" class="h-16 w-16 object-contain mb-6 filter invert opacity-90">
                 <p class="max-w-xs text-center md:text-left text-sm leading-relaxed mb-6">
-                    Redefiniendo el RTD con foco absoluto en la calidad. Cero esperas. 100% Enfoque.
+                    Redefining the energy landscape. Crafted for high-performers. Spain based. Worldwide soul.
                 </p>
             </div>
             
             <div class="text-center md:text-right">
-                <h4 class="text-white font-bold tracking-widest uppercase mb-4 text-sm">Navegación</h4>
+                <h4 class="text-white font-bold tracking-widest uppercase mb-4 text-sm">Navigation</h4>
                 <div class="flex flex-col gap-2 font-medium">
                     <a href="index.html" class="hover:text-white transition-colors">Inicio</a>
                     <a href="productos.html" class="hover:text-white transition-colors">Productos</a>
                     <a href="nosotros.html" class="hover:text-white transition-colors">Nosotros</a>
+                    <a href="contacto.html" class="hover:text-white transition-colors">Contacto</a>
                     <a href="terminos.html" class="hover:text-white transition-colors">Términos Legales</a>
                 </div>
-                <p class="text-sm mt-6">Campus UMA Teatinos<br>Málaga, España</p>
+                <p class="text-sm mt-6">From the coast to your desk.<br>España.</p>
             </div>
         </div>
     </footer>

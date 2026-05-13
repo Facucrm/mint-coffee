@@ -2,67 +2,67 @@ const MINT_PRODUCTS = {
     'mint-black': {
         id: 'mint-black',
         name: 'MINT Cold Brew',
-        tagline: 'Original 18h Extraction',
+        tagline: 'PEAK PERFORMANCE. ANYTIME.',
         price: 3.40,
         image: './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png',
-        description: 'Nuestro buque insignia. El clásico MINT Cold Brew pasa por una cuidadosa extracción en frío de 18 horas utilizando granos 100% Arábica de especialidad tueste medio-claro. Este proceso elimina el amargor y la acidez agresiva, resultando en un perfil de sabor excepcionalmente suave y dulce por naturaleza.',
-        tastingNotes: ['Chocolate Negro', 'Nuez Tostada', 'Caramelo Ligero'],
+        description: 'The definitive standard for the modern professional. Our signature Cold Brew undergoes an 18-hour slow extraction process using 100% speciality Arabica beans. Designed for those who demand clarity and focus without the bitterness. A design accessory for your workspace.',
+        tastingNotes: ['Dark Chocolate', 'Toasted Nut', 'Silky Caramel'],
         nutrition: {
             calories: '15 kcal',
             sugar: '0g',
-            caffeine: '180mg (Equivalente a 2.5 espressos)',
-            ingredients: 'Agua filtrada, café 100% Arábica de especialidad.'
+            caffeine: '180mg (Clean Energy)',
+            ingredients: 'Filtered water, 100% Speciality Arabica Coffee.'
         },
         reviews: [
-            { name: 'Carlos M.', rating: 5, text: 'Es increíble la diferencia con un café de máquina de la facultad. Suave y sin acidez. Me salva los días de estudio intenso.' },
-            { name: 'Laura Gómez', rating: 5, text: 'Literalmente no puedo empezar mi mañana sin él. El sabor a nuez tostada es super evidente y no necesito echarle azúcar.' },
-            { name: 'David R.', rating: 4, text: 'Muy buen café frío, súper práctico para llevar. Ojalá lo vendieran en packs más grandes.' }
+            { name: 'Marcus K.', rating: 5, text: 'The clarity this provides is unmatched. A staple in my morning routine at the studio.' },
+            { name: 'Elena G.', rating: 5, text: 'No acidity, just pure flavor. The minimalist packaging is a statement in itself.' },
+            { name: 'Julian R.', rating: 5, text: 'From the gym to the boardroom, it is the perfect fuel. Uncompromising quality.' }
         ]
     },
     'mint-caramel': {
         id: 'mint-caramel',
-        name: 'Caramel Cold Brew',
-        tagline: 'Sweet Balance',
+        name: 'MINT Caramel',
+        tagline: 'LUXURY COMMODITY',
         price: 3.40,
         image: './img/Gemini_Generated_Image_kc4kbpkc4kbpkc4k.png',
-        description: 'La indulgencia perfecta sin sacrificar la energía. Tomamos nuestra base de Cold Brew de 18 horas y la combinamos magistralmente con notas sutiles a caramelo salado y un toque de vainilla natural. Es el equilibrio exacto entre el dulzor y el intenso perfil de nuestro café de especialidad.',
-        tastingNotes: ['Caramelo Salado', 'Vainilla Natural', 'Cacao'],
+        description: 'Functional luxury in a can. We blend our signature 18-hour cold extraction with subtle notes of salted caramel and natural Madagascar vanilla. Crafted for those who seek the perfect balance between indulgence and high-octane performance.',
+        tastingNotes: ['Salted Caramel', 'Madagascar Vanilla', 'Velvety Cacao'],
         nutrition: {
             calories: '45 kcal',
-            sugar: '4g (Azúcar de caña natural)',
+            sugar: '4g (Natural cane sugar)',
             caffeine: '180mg',
-            ingredients: 'Agua filtrada, café 100% Arábica de especialidad, sirope de caramelo natural, extracto de vainilla.'
+            ingredients: 'Filtered water, 100% Speciality Arabica, natural caramel syrup, vanilla extract.'
         },
         reviews: [
-            { name: 'Sofía T.', rating: 5, text: 'El toque de caramelo es sutil, no es empalagoso como los del Starbucks. Perfecto para media tarde.' },
-            { name: 'Javier F.', rating: 5, text: 'Me encanta. Sabe a lujo. La lata dorada/bronce además tiene un tacto increíble.' },
-            { name: 'Elena Ruiz', rating: 4, text: 'Riquísimo, aunque suelo preferir el negro, este es ideal cuando tienes antojo de algo dulce pero quieres energía.' }
+            { name: 'Sophia T.', rating: 5, text: 'Sophisticated sweetness. It feels premium from the first sip to the last.' },
+            { name: 'Victor L.', rating: 5, text: 'The copper matte finish of the can is stunning. It is as much a design piece as it is a drink.' },
+            { name: 'Isabella M.', rating: 5, text: 'My go-to for late-night creative sessions. Clean energy with a touch of class.' }
         ]
     },
     'mint-matcha': {
         id: 'mint-matcha',
-        name: 'MINT Matcha Latte',
-        tagline: 'Ceremonial Grade',
+        name: 'MINT Matcha',
+        tagline: 'CEREMONIAL GRADE. JAPÓN.',
         price: 3.40,
         image: './img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png',
-        description: 'Nuestra alternativa verde. Utilizamos exclusivamente Matcha de Grado Ceremonial procedente directamente de Uji, Japón. Al mezclarlo suavemente con leche de avena premium, logramos una bebida cremosa que proporciona una energía sostenida y focalizada (gracias a la L-Teanina) sin los temblores del café.',
-        tastingNotes: ['Umami Suave', 'Avena Dulce', 'Notas Herbáceas'],
+        description: 'The green standard for high-performers. Sourced directly from Uji, Japan, our Ceremonial Grade Matcha is blended with premium oat milk. It provides a sustained, calm energy flow—powered by L-Theanine—without the crash. Mental clarity for the modern era.',
+        tastingNotes: ['Sweet Umami', 'Creamy Oat', 'Bright Herbal'],
         nutrition: {
             calories: '85 kcal',
             sugar: '2g',
-            caffeine: '70mg',
-            ingredients: 'Bebida de avena premium (agua, avena), Té Matcha Grado Ceremonial (Japón), estabilizante natural.'
+            caffeine: '70mg (Sustained Focus)',
+            ingredients: 'Premium oat milk, Ceremonial Grade Matcha (Uji, Japan), natural stabilizer.'
         },
         reviews: [
-            { name: 'Marta V.', rating: 5, text: 'He probado muchos matchas envasados y este es el único que sabe a matcha de verdad, ceremonial. Nada arenoso.' },
-            { name: 'Pablo S.', rating: 5, text: 'La energía que da el matcha es distinta, mucho más enfocada. Me viene genial para concentrarme sin ponerme nervioso.' },
-            { name: 'Ana Isabel', rating: 5, text: 'Simplemente delicioso. La mezcla con la avena es súper cremosa. Un 10 absoluto.' }
+            { name: 'Ami H.', rating: 5, text: 'Finally, an RTD matcha that actually tastes like ceremonial grade. Truly impressive.' },
+            { name: 'Daniel S.', rating: 5, text: 'The focus I get from this is unparalleled. No jitters, just pure flow.' },
+            { name: 'Nathalie B.', rating: 5, text: 'Creamy, vibrant, and incredibly designed. A must-have in my workspace.' }
         ]
     },
     'mint-6pack': {
         id: 'mint-6pack',
-        name: 'The 6-Pack Collection',
-        tagline: 'The Complete Experience',
+        name: 'The Performance Box',
+        tagline: 'THE NEW STANDARD',
         price: 14.99,
         image: './img/Gemini_Generated_Image_5jcqr75jcqr75jcq.png',
         gallery: [
@@ -70,18 +70,75 @@ const MINT_PRODUCTS = {
             './img/Gemini_Generated_Image_kc4kbpkc4kbpkc4k.png',
             './img/Gemini_Generated_Image_p3gbgfp3gbgfp3gb.png'
         ],
-        description: 'El surtido definitivo para mantener tu semana al máximo nivel. Este pack ahorro incluye 2 latas de MINT Cold Brew Original, 2 latas de Caramel Cold Brew y 2 latas de MINT Matcha Latte. Disfruta de la variedad perfecta para alternar entre energía pura, indulgencia dulce y enfoque prolongado. Ahorras más de 5€ respecto a la compra individual.',
-        tastingNotes: ['Variedad Completa', 'Ahorro Extra', 'Energía 24/7'],
+        description: 'The ultimate survival kit for the high-performing professional. This collection includes 2x MINT Cold Brew, 2x MINT Caramel, and 2x MINT Matcha. Designed to provide a versatile energy landscape for your entire work week. Uncompromising focus from Monday to Friday.',
+        tastingNotes: ['Complete Experience', 'Versatile Energy', 'Pure Performance'],
         nutrition: {
             calories: 'Variable',
             sugar: 'Variable',
-            caffeine: 'Alta',
-            ingredients: 'Contiene 2x Cold Brew, 2x Caramel Cold Brew, 2x Matcha Latte.'
+            caffeine: 'High / Sustained',
+            ingredients: 'Includes 2x Cold Brew, 2x Caramel, 2x Matcha.'
         },
         reviews: [
-            { name: 'Alejandro G.', rating: 5, text: 'El mejor pack de supervivencia para exámenes. Salen super rentables y tienes para toda la semana.' },
-            { name: 'Sara L.', rating: 5, text: 'Genial para probar todos los sabores o si en el piso de estudiantes a cada uno le gusta uno diferente.' },
-            { name: 'Miguel R.', rating: 5, text: 'El precio es inmejorable. Ojalá saquen un pack de 12 pronto.' }
+            { name: 'Alex G.', rating: 5, text: 'Perfect for the office. Keeps me fueled through back-to-back meetings.' },
+            { name: 'Sarah L.', rating: 5, text: 'The box design is just as premium as the cans. A great gift for any enthusiast.' },
+            { name: 'Michael R.', rating: 5, text: 'Unbeatable value for the highest quality RTD on the market.' }
+        ]
+    },
+    'granos-arabicos': {
+        id: 'granos-arabicos',
+        name: 'GRANOS ARÁBICOS',
+        tagline: 'PREMIUM SPECIALITY BEANS',
+        price: 3.40,
+        image: './img/cafe arabico.jpg',
+        description: 'Elevate your home ritual with our Premium Arábica beans. Sourced from the highest altitudes, these beans are roasted to perfection for those who refuse to compromise on quality even at home. A luxury commodity for the modern workspace.',
+        tastingNotes: ['Roasted Hazelnut', 'Dark Chocolate', 'Stone Fruit'],
+        nutrition: {
+            origin: 'High Altitude Selection',
+            altitude: '1800m',
+            process: 'Washed / Sun-dried',
+            ingredients: '100% Speciality Arabica Beans'
+        },
+        reviews: [
+            { name: 'James W.', rating: 5, text: 'The aroma when you open the bag is incredible. Clean, focused energy.' },
+            { name: 'Linda P.', rating: 5, text: 'The best beans I have ever ground at home. Truly a premium experience.' }
+        ]
+    },
+    'granos-colombianos': {
+        id: 'granos-colombianos',
+        name: 'GRANOS COLOMBIANOS',
+        tagline: 'SINGLE ORIGIN HUILA',
+        price: 3.40,
+        image: './img/cafe colombiano.jpg',
+        description: 'The standard of excellence. Our Colombian Single Origin from Huila offers a sophisticated balance of acidity and sweetness. Perfect for high-performers who need a refined, clean cup to fuel their most ambitious projects.',
+        tastingNotes: ['Sweet Citrus', 'Red Berries', 'Caramel Finish'],
+        nutrition: {
+            origin: 'Huila, Colombia',
+            altitude: '1700m',
+            process: 'Fully Washed',
+            ingredients: '100% Single Origin Colombian Coffee'
+        },
+        reviews: [
+            { name: 'Robert D.', rating: 5, text: 'Balanced, sweet, and bright. Everything you want in a Colombian coffee.' },
+            { name: 'Maria C.', rating: 5, text: 'Huila never disappoints. The roast profile is spot on.' }
+        ]
+    },
+    'te-matcha': {
+        id: 'te-matcha',
+        name: 'TÉ MATCHA',
+        tagline: 'CEREMONIAL GRADE POWDER',
+        price: 3.40,
+        image: './img/te matcha.jpg',
+        description: 'Pure ceremonial grade Matcha from Uji, Japan. A functional luxury commodity for high-performers seeking sustained focus and antioxidant benefits. Vibrant green, silky texture, and unparalleled mental clarity.',
+        tastingNotes: ['Deep Umami', 'Vibrant Grassy', 'Sweet Cream'],
+        nutrition: {
+            origin: 'Uji, Japan',
+            grade: 'Ceremonial',
+            benefits: 'High Antioxidants / L-Theanine',
+            ingredients: '100% Pure Ceremonial Grade Matcha'
+        },
+        reviews: [
+            { name: 'Yuki M.', rating: 5, text: 'Authentic quality. The color is incredibly vibrant. Perfect for my morning focus.' },
+            { name: 'Sarah J.', rating: 5, text: 'Clean energy without the crash. A must-have for long work sessions.' }
         ]
     }
 };
@@ -90,14 +147,22 @@ let currentImageIdx = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
+    let productId = urlParams.get('id');
+
+    // SEO Slug Detection
+    if (!productId) {
+        const path = window.location.pathname;
+        if (path.includes('granos-arabicos')) productId = 'granos-arabicos';
+        else if (path.includes('granos-colombianos')) productId = 'granos-colombianos';
+        else if (path.includes('te-matcha')) productId = 'te-matcha';
+    }
 
     if (productId && MINT_PRODUCTS[productId]) {
         currentProduct = MINT_PRODUCTS[productId];
         renderProduct(currentProduct);
-    } else if(window.location.pathname.includes('producto.html')) {
-        // Fallback si no hay ID
-        window.location.href = 'productos.html';
+    } else if(window.location.pathname.includes('producto.html') || productId) {
+        // Fallback si no hay ID o el ID es inválido en una página de producto
+        if (!productId) window.location.href = 'productos.html';
     }
 });
 
@@ -106,10 +171,20 @@ function renderProduct(product) {
     
     // Set basic info
     document.getElementById('p-image').src = product.image;
+    document.getElementById('p-image').alt = `${product.name} - ${product.tagline} | MINT Speciality`;
     document.getElementById('p-tagline').textContent = product.tagline;
     document.getElementById('p-name').textContent = product.name;
     document.getElementById('p-price').textContent = `${product.price.toFixed(2).replace('.', ',')}€`;
     document.getElementById('p-desc').textContent = product.description;
+
+    // Update Meta Description
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.name = "description";
+        document.head.appendChild(metaDesc);
+    }
+    metaDesc.content = `${product.description} ${product.tastingNotes.join(', ')}. Pure performance, zero compromise.`;
     
     // Set Tasting Notes
     const notesContainer = document.getElementById('p-notes');
@@ -138,11 +213,33 @@ function renderProduct(product) {
         }
     }
 
-    // Set Nutrition Info
-    document.getElementById('n-cal').textContent = product.nutrition.calories;
-    document.getElementById('n-sugar').textContent = product.nutrition.sugar;
-    document.getElementById('n-caf').textContent = product.nutrition.caffeine;
-    document.getElementById('n-ing').textContent = product.nutrition.ingredients;
+    // Set Nutrition Info / Details
+    const labels = {
+        'n-cal': product.nutrition.calories || product.nutrition.origin || '-',
+        'n-sugar': product.nutrition.sugar || product.nutrition.altitude || product.nutrition.grade || '-',
+        'n-caf': product.nutrition.caffeine || product.nutrition.process || product.nutrition.benefits || '-',
+        'n-ing': product.nutrition.ingredients || '-'
+    };
+
+    // Update labels if it's a dry product (beans/powder)
+    const calLabel = document.querySelector('span[id="n-cal"]').previousElementSibling;
+    const sugarLabel = document.querySelector('span[id="n-sugar"]').previousElementSibling;
+    const cafLabel = document.querySelector('span[id="n-caf"]').previousElementSibling;
+
+    if (product.nutrition.origin) {
+        if (calLabel) calLabel.textContent = 'Origen';
+        if (sugarLabel) sugarLabel.textContent = product.nutrition.altitude ? 'Altitud' : 'Grado';
+        if (cafLabel) cafLabel.textContent = product.nutrition.process ? 'Proceso' : 'Beneficios';
+    } else {
+        if (calLabel) calLabel.textContent = 'Calorías';
+        if (sugarLabel) sugarLabel.textContent = 'Azúcares';
+        if (cafLabel) cafLabel.textContent = 'Cafeína Estimada';
+    }
+
+    document.getElementById('n-cal').textContent = labels['n-cal'];
+    document.getElementById('n-sugar').textContent = labels['n-sugar'];
+    document.getElementById('n-caf').textContent = labels['n-caf'];
+    document.getElementById('n-ing').textContent = labels['n-ing'];
 
     // Set Reviews
     const reviewsContainer = document.getElementById('p-reviews');

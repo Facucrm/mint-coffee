@@ -39,6 +39,44 @@
         ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
 
+        /* Dropdown Logic */
+        .nav-dropdown { position: relative; display: inline-block; }
+        .nav-dropdown-content { 
+            position: absolute; 
+            top: 100%; 
+            left: 50%; 
+            transform: translateX(-50%) translateY(10px);
+            background: white; 
+            border: 1px solid #e5e7eb; 
+            padding: 0.75rem 0; 
+            min-width: 220px; 
+            opacity: 0; 
+            pointer-events: none; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            z-index: 100;
+            border-radius: 12px;
+        }
+        .nav-dropdown:hover .nav-dropdown-content { 
+            opacity: 1; 
+            pointer-events: auto; 
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-link {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: #1c1917;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .nav-dropdown-link:hover {
+            background-color: #f5f5f4;
+            color: #1c1917;
+            padding-left: 1.75rem;
+        }
+
         .form-input {
             width: 100%;
             background-color: transparent;
@@ -70,7 +108,16 @@
             <div class="flex-1 md:flex-none">
                 <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
                     <a href="index.html" class="hover:text-stone-500 transition-colors">Inicio</a>
-                    <a href="productos.html" class="hover:text-stone-500 transition-colors">Productos</a>
+                    <div class="nav-dropdown">
+                        <a href="productos.html" class="hover:text-stone-500 transition-colors flex items-center gap-1">
+                            Productos
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </a>
+                        <div class="nav-dropdown-content">
+                            <a href="productos.html?tab=lattes" class="nav-dropdown-link">Café Especialidad Latte</a>
+                            <a href="productos.html?tab=beans" class="nav-dropdown-link">Café Especialidad en Grano</a>
+                        </div>
+                    </div>
                     <a href="nosotros.html" class="hover:text-stone-500 transition-colors">Nosotros</a>
                     <a href="contacto.html" class="text-stone-900 font-bold border-b-2 border-stone-900 pb-1">Contacto</a>
                 </nav>
@@ -112,7 +159,11 @@
     <!-- Mobile Menu Overlay -->
     <div id="mobileMenu" class="fixed inset-0 bg-stone-50 z-40 transform -translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center justify-center space-y-8 md:hidden">
         <a href="index.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Inicio</a>
-        <a href="productos.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Productos</a>
+        <div class="flex flex-col items-center space-y-4">
+            <span class="text-xs font-bold tracking-[0.3em] text-stone-400 uppercase">Colección</span>
+            <a href="productos.html?tab=lattes" class="text-3xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Especialidad Latte</a>
+            <a href="productos.html?tab=beans" class="text-3xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Especialidad Grano</a>
+        </div>
         <a href="nosotros.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Nosotros</a>
         <a href="contacto.html" class="text-4xl font-extrabold tracking-tighter text-stone-900 hover:text-stone-500 transition-colors">Contacto</a>
     </div>
@@ -153,20 +204,20 @@
                 <!-- Left: Info -->
                 <div class="space-y-12">
                     <div>
-                        <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-8">Hablemos de Negocios.</h1>
+                        <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-8 uppercase">Global Partnerships.</h1>
                         <p class="text-xl text-stone-500 leading-relaxed max-w-lg">
-                            ¿Quieres elevar la oferta de café en tu establecimiento? Buscamos socios que compartan nuestra pasión por la calidad y el diseño.
+                            Elevate your establishment's coffee experience. We partner with boutique hotels, premium retailers, and high-end coworking spaces nationwide.
                         </p>
                     </div>
 
                     <div class="grid sm:grid-cols-2 gap-12">
                         <div class="space-y-4">
-                            <h3 class="font-bold text-stone-400 uppercase tracking-widest text-xs">Ventas B2B</h3>
-                            <p class="font-medium text-lg">b2b@mintspeciality.com</p>
+                            <h3 class="font-bold text-stone-400 uppercase tracking-widest text-xs">B2B Inquiries</h3>
+                            <p class="font-medium text-lg">partnerships@mintspeciality.com</p>
                         </div>
                         <div class="space-y-4">
-                            <h3 class="font-bold text-stone-400 uppercase tracking-widest text-xs">Ubicación</h3>
-                            <p class="font-medium text-lg">Campus UMA Teatinos<br>Málaga, España</p>
+                            <h3 class="font-bold text-stone-400 uppercase tracking-widest text-xs">Headquarters</h3>
+                            <p class="font-medium text-lg">Málaga, Spain<br>National Distribution</p>
                         </div>
                     </div>
 
@@ -175,15 +226,15 @@
                         <ul class="space-y-4 text-stone-400">
                             <li class="flex items-start gap-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-white mt-1"><path d="M20 6 9 17l-5-5"/></svg>
-                                <span>Café de Especialidad 100% Arábica listo para tomar.</span>
+                                <span>Third-wave speciality coffee in a premium RTD format.</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-white mt-1"><path d="M20 6 9 17l-5-5"/></svg>
-                                <span>Branding premium que destaca en cualquier lineal.</span>
+                                <span>Minimalist design that complements high-end spaces.</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-white mt-1"><path d="M20 6 9 17l-5-5"/></svg>
-                                <span>Logística optimizada para restauración y retail.</span>
+                                <span>Optimized nationwide logistics for retail and corporate.</span>
                             </li>
                         </ul>
                     </div>
@@ -268,7 +319,7 @@
                     <a href="contacto.html" class="text-white transition-colors">Contacto</a>
                     <a href="terminos.html" class="hover:text-white transition-colors">Términos Legales</a>
                 </div>
-                <p class="text-sm mt-6">Campus UMA Teatinos<br>Málaga, España</p>
+                <p class="text-sm mt-6">From the coast to your desk.<br>España.</p>
             </div>
         </div>
     </footer>
